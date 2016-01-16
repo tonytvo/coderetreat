@@ -23,7 +23,7 @@ All you need to build this project is Java 6.0 (Java SDK 1.6) or later, Gradle.
 Testing
 -------
 
-Unit tests can be run using gradle[1]:
+Unit tests can be run using gradle [1]:
 
     $ gradle test
 
