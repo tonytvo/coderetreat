@@ -11,6 +11,9 @@ You need to build a solid set of tests for that section of code. The tests are e
 though you follow refactorings structured to avoid most of the opportunities for introducing bugs,
 you are still human and still make mistakes. Thus you need solid tests.
 
+My attempt at this refactoring: https://youtu.be/orLAOmuHYjk
+Let's Developer version: https://www.youtube.com/playlist?list=PLwAX_Bwbts_fNLKqMKJiZhktM6rJIN0_s
+
 # Usage
 
 The purpose of this is to provide good examples for the refactoring workshop.
