@@ -1,0 +1,477 @@
+diff --git a/refactoring/gildedrose/gradle/wrapper/gradle-wrapper.properties b/refactoring/gildedrose/gradle/wrapper/gradle-wrapper.properties
+index d039174..37e2bb9 100644
+--- a/refactoring/gildedrose/gradle/wrapper/gradle-wrapper.properties
++++ b/refactoring/gildedrose/gradle/wrapper/gradle-wrapper.properties
+@@ -1,6 +1,6 @@
+-#Tue Aug 25 21:03:46 MDT 2015
++#Sun Feb 28 00:40:26 MST 2016
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-2.6-bin.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-2.6-all.zip
+diff --git a/refactoring/gildedrose/java/src/main/java/com/glidedrose/AgedBrieItemUpdater.java b/refactoring/gildedrose/java/src/main/java/com/glidedrose/AgedBrieItemUpdater.java
+new file mode 100644
+index 0000000..06bd306
+--- /dev/null
++++ b/refactoring/gildedrose/java/src/main/java/com/glidedrose/AgedBrieItemUpdater.java
+@@ -0,0 +1,19 @@
++package com.glidedrose;
++
++/**
++ * Created by Tony on 2/28/2016.
++ */
++public class AgedBrieItemUpdater extends ItemUpdater {
++    public void updateQualityAndSellIn(Item item) {
++        if (item.quality < ItemUpdater.MAX_QUALITY_VALUE) {
++            item.quality = item.quality + 1;
++        }
++
++        item.sellIn = item.sellIn - 1;
++
++        if (item.sellIn >= 0)
++            return;
++
++        increaseQualityValueBy1(item);
++    }
++}
+diff --git a/refactoring/gildedrose/java/src/main/java/com/glidedrose/BackStagePassesItemUpdater.java b/refactoring/gildedrose/java/src/main/java/com/glidedrose/BackStagePassesItemUpdater.java
+new file mode 100644
+index 0000000..f53163d
+--- /dev/null
++++ b/refactoring/gildedrose/java/src/main/java/com/glidedrose/BackStagePassesItemUpdater.java
+@@ -0,0 +1,25 @@
++package com.glidedrose;
++
++/**
++ * Created by Tony on 2/28/2016.
++ */
++public class BackStagePassesItemUpdater extends ItemUpdater {
++    public void updateQualityAndSellIn(Item item) {
++        increaseQualityValueBy1(item);
++
++        if (item.sellIn < 11) {
++            increaseQualityValueBy1(item);
++        }
++
++        if (item.sellIn < 6) {
++            increaseQualityValueBy1(item);
++        }
++
++        item.sellIn = item.sellIn - 1;
++
++        if (item.sellIn >= 0)
++            return;
++
++        item.quality = item.quality - item.quality;
++    }
++}
+diff --git a/refactoring/gildedrose/java/src/main/java/com/glidedrose/GildedRose.java b/refactoring/gildedrose/java/src/main/java/com/glidedrose/GildedRose.java
+index d15dfd2..cfe905d 100644
+--- a/refactoring/gildedrose/java/src/main/java/com/glidedrose/GildedRose.java
++++ b/refactoring/gildedrose/java/src/main/java/com/glidedrose/GildedRose.java
+@@ -1,6 +1,8 @@
+ package com.glidedrose;
+ 
+ class GildedRose {
++
++    // TODO change this to list instead of array
+     Item[] items;
+ 
+     public GildedRose(Item[] items) {
+@@ -8,55 +10,10 @@ class GildedRose {
+     }
+ 
+     public void updateQuality() {
+-        for (int i = 0; i < items.length; i++) {
+-            if (!items[i].name.equals("Aged Brie")
+-                    && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+-                if (items[i].quality > 0) {
+-                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
+-                        items[i].quality = items[i].quality - 1;
+-                    }
+-                }
+-            } else {
+-                if (items[i].quality < 50) {
+-                    items[i].quality = items[i].quality + 1;
+-
+-                    if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+-                        if (items[i].sellIn < 11) {
+-                            if (items[i].quality < 50) {
+-                                items[i].quality = items[i].quality + 1;
+-                            }
+-                        }
+-
+-                        if (items[i].sellIn < 6) {
+-                            if (items[i].quality < 50) {
+-                                items[i].quality = items[i].quality + 1;
+-                            }
+-                        }
+-                    }
+-                }
+-            }
+-
+-            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
+-                items[i].sellIn = items[i].sellIn - 1;
+-            }
+-
+-            if (items[i].sellIn < 0) {
+-                if (!items[i].name.equals("Aged Brie")) {
+-                    if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+-                        if (items[i].quality > 0) {
+-                            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
+-                                items[i].quality = items[i].quality - 1;
+-                            }
+-                        }
+-                    } else {
+-                        items[i].quality = items[i].quality - items[i].quality;
+-                    }
+-                } else {
+-                    if (items[i].quality < 50) {
+-                        items[i].quality = items[i].quality + 1;
+-                    }
+-                }
+-            }
++        for (Item item: items) {
++            ItemUpdater itemUpdater = new ItemUpdaterFactory().getItemUpdater(item);
++            itemUpdater.updateQualityAndSellIn(item);
+         }
+     }
++
+ }
+\ No newline at end of file
+diff --git a/refactoring/gildedrose/java/src/main/java/com/glidedrose/ItemUpdater.java b/refactoring/gildedrose/java/src/main/java/com/glidedrose/ItemUpdater.java
+new file mode 100644
+index 0000000..8ffab38
+--- /dev/null
++++ b/refactoring/gildedrose/java/src/main/java/com/glidedrose/ItemUpdater.java
+@@ -0,0 +1,16 @@
++package com.glidedrose;
++
++/**
++ * Created by Tony on 2/28/2016.
++ */
++public abstract class ItemUpdater {
++    public static final int MAX_QUALITY_VALUE = 50;
++
++    void increaseQualityValueBy1(Item item) {
++        if (item.quality < MAX_QUALITY_VALUE) {
++            item.quality = item.quality + 1;
++        }
++    }
++
++    public abstract void updateQualityAndSellIn(Item item);
++}
+diff --git a/refactoring/gildedrose/java/src/main/java/com/glidedrose/ItemUpdaterFactory.java b/refactoring/gildedrose/java/src/main/java/com/glidedrose/ItemUpdaterFactory.java
+new file mode 100644
+index 0000000..cafc8d6
+--- /dev/null
++++ b/refactoring/gildedrose/java/src/main/java/com/glidedrose/ItemUpdaterFactory.java
+@@ -0,0 +1,24 @@
++package com.glidedrose;
++
++/**
++ * Created by Tony on 2/28/2016.
++ */
++public class ItemUpdaterFactory {
++
++    public static final String AGED_BRIE_ITEM = "Aged Brie";
++    public static final String BACKSTAGE_PASSES_ITEM = "Backstage passes to a TAFKAL80ETC concert";
++    public static final String SULFURAS_ITEM = "Sulfuras, Hand of Ragnaros";
++
++    public ItemUpdater getItemUpdater(Item item) {
++        if (item.name.equals(SULFURAS_ITEM))
++            return new SulurusItemUpdater();
++
++        if (item.name.equals(AGED_BRIE_ITEM))
++            return new AgedBrieItemUpdater();
++
++        if (item.name.equals(BACKSTAGE_PASSES_ITEM))
++            return new BackStagePassesItemUpdater();
++
++        return new RegularItemUpdater();
++    }
++}
+diff --git a/refactoring/gildedrose/java/src/main/java/com/glidedrose/RegularItemUpdater.java b/refactoring/gildedrose/java/src/main/java/com/glidedrose/RegularItemUpdater.java
+new file mode 100644
+index 0000000..8e42f31
+--- /dev/null
++++ b/refactoring/gildedrose/java/src/main/java/com/glidedrose/RegularItemUpdater.java
+@@ -0,0 +1,23 @@
++package com.glidedrose;
++
++/**
++ * Created by Tony on 2/28/2016.
++ */
++public class RegularItemUpdater extends ItemUpdater {
++    public void updateQualityAndSellIn(Item item) {
++        decreaseQualityValueBy1(item);
++
++        item.sellIn = item.sellIn - 1;
++
++        if (item.sellIn >= 0)
++            return;
++
++        decreaseQualityValueBy1(item);
++    }
++
++    private void decreaseQualityValueBy1(Item item) {
++        if (item.quality > 0) {
++            item.quality = item.quality - 1;
++        }
++    }
++}
+diff --git a/refactoring/gildedrose/java/src/main/java/com/glidedrose/SulurusItemUpdater.java b/refactoring/gildedrose/java/src/main/java/com/glidedrose/SulurusItemUpdater.java
+new file mode 100644
+index 0000000..44b8d01
+--- /dev/null
++++ b/refactoring/gildedrose/java/src/main/java/com/glidedrose/SulurusItemUpdater.java
+@@ -0,0 +1,9 @@
++package com.glidedrose;
++
++/**
++ * Created by Tony on 2/28/2016.
++ */
++class SulurusItemUpdater extends ItemUpdater {
++    @Override
++    public void updateQualityAndSellIn(Item item) { }
++}
+diff --git a/refactoring/gildedrose/java/src/main/java/com/glidedrose/TextTestFixture.java b/refactoring/gildedrose/java/src/main/java/com/glidedrose/TextTestFixture.java
+deleted file mode 100644
+index 5253760..0000000
+--- a/refactoring/gildedrose/java/src/main/java/com/glidedrose/TextTestFixture.java
++++ /dev/null
+@@ -1,36 +0,0 @@
+-package com.glidedrose;
+-
+-public class TextTestFixture {
+-    public static void main(String[] args) {
+-        System.out.println("OMGHAI!");
+-
+-        Item[] items = new Item[] {
+-                new Item("+5 Dexterity Vest", 10, 20), //
+-                new Item("Aged Brie", 2, 0), //
+-                new Item("Elixir of the Mongoose", 5, 7), //
+-                new Item("Sulfuras, Hand of Ragnaros", 0, 80), //
+-                new Item("Sulfuras, Hand of Ragnaros", -1, 80),
+-                new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
+-                new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
+-                new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
+-                // this conjured item does not work properly yet
+-                new Item("Conjured Mana Cake", 3, 6) };
+-
+-        GildedRose app = new GildedRose(items);
+-
+-        int days = 2;
+-        if (args.length > 0) {
+-            days = Integer.parseInt(args[0]) + 1;
+-        }
+-
+-        for (int i = 0; i < days; i++) {
+-            System.out.println("-------- day " + i + " --------");
+-            System.out.println("name, sellIn, quality");
+-            for (Item item : items) {
+-                System.out.println(item);
+-            }
+-            System.out.println();
+-            app.updateQuality();
+-        }
+-    }
+-}
+\ No newline at end of file
+diff --git a/refactoring/gildedrose/java/src/test/java/com/glidedrose/GildedRoseTest.java b/refactoring/gildedrose/java/src/test/java/com/glidedrose/GildedRoseTest.java
+index ac0c151..431ab57 100644
+--- a/refactoring/gildedrose/java/src/test/java/com/glidedrose/GildedRoseTest.java
++++ b/refactoring/gildedrose/java/src/test/java/com/glidedrose/GildedRoseTest.java
+@@ -2,16 +2,185 @@ package com.glidedrose;
+ 
+ import static org.junit.Assert.*;
+ 
++import org.junit.Before;
++import org.junit.Ignore;
+ import org.junit.Test;
+ 
++import java.util.ArrayList;
++import java.util.List;
++
+ public class GildedRoseTest {
+ 
++    public class GildedRoseBuilder {
++        GildedRose gildedRose;
++        List<Item> items = new ArrayList<Item>();
++
++        GildedRoseBuilder withRegularItemWithSellInValue(int sellInValue) {
++            Item item = new Item("regular", sellInValue, 0);
++            items.add(item);
++            return this;
++        }
++
++        GildedRoseBuilder withRegularItemWithQualityValue(int qualityValue) {
++            Item item = new Item("regular", 0, qualityValue);
++            items.add(item);
++            return this;
++        }
++
++        GildedRoseBuilder withRegularItemWithSellInValueAndQualityValue(int sellInValue, int qualityValue) {
++            Item item = new Item("regular", sellInValue, qualityValue);
++            items.add(item);
++            return this;
++        }
++
++        GildedRoseBuilder withItemNameAndSellInValueAndQualityValue(String itemName, int sellInValue, int qualityValue) {
++            Item item = new Item(itemName, sellInValue, qualityValue);
++            items.add(item);
++            return this;
++        }
++
++        GildedRose build() {
++            gildedRose = new GildedRose(items.toArray(new Item[0]));
++            return gildedRose;
++        }
++    }
++
++    private void updateAndConfirmQualityForEachDayInNDays(GildedRose app, int numDays, int originalQualityValue, int deltaMultiplier) {
++        for(int i=0; i < numDays; i++) {
++            app.updateQuality();
++            assertEquals(originalQualityValue + deltaMultiplier * (i + 1), app.items[0].quality);
++        }
++    }
++
++    private GildedRoseBuilder gildedRoseBuilder;
++    @Before
++    public void setup() {
++        gildedRoseBuilder = new GildedRoseBuilder();
++    }
++
++    @Test
++    public void gildedRoseShouldLowerSellInValueAtTheEndOfTheDay() {
++        GildedRose app = gildedRoseBuilder.withRegularItemWithSellInValue(5).build();
++        app.updateQuality();
++        assertEquals(4, app.items[0].sellIn);
++    }
++
++    @Test
++    public void gildedRoseShouldLowerSellInValueByNInNDays() {
++        GildedRose app = gildedRoseBuilder.withRegularItemWithSellInValue(5).build();
++        for(int i=0; i < 3; i++) {
++            app.updateQuality();
++            assertEquals(5 - (i + 1), app.items[0].sellIn);
++        }
++        assertEquals(2, app.items[0].sellIn);
++    }
++
++    @Test
++    public void qualityValueShouldNeverBeNegative() {
++        GildedRose app = gildedRoseBuilder.withRegularItemWithQualityValue(0).build();
++        app.updateQuality();
++        assertEquals(0, app.items[0].quality);
++    }
++
++    @Test
++    public void sellInValueCanBeNegative() {
++        GildedRose app = gildedRoseBuilder.withRegularItemWithSellInValue(0).build();
++        app.updateQuality();
++        assertEquals(-1, app.items[0].sellIn);
++    }
++
++    @Test
++    public void givenSellInDateNotPassedYetThenItShouldLowersQualityValueBy1AtTheEndOfTheDay() {
++        GildedRose app = gildedRoseBuilder.withRegularItemWithSellInValueAndQualityValue(1, 1).build();
++        app.updateQuality();
++        assertEquals(0, app.items[0].quality);
++    }
++
++    @Test
++    public void givenSellInDatePassedThenItShouldLowersQualityValueBy2AtTheEndOfTheDay() {
++        GildedRose app = gildedRoseBuilder.withRegularItemWithSellInValueAndQualityValue(0, 4).build();
++        app.updateQuality();
++        assertEquals(2, app.items[0].quality);
++    }
++
++    @Test
++    public void givenSellInDatePassedThenItShouldLowersQualityValueTwiceAsFastAfterNDays() {
++        GildedRose app = gildedRoseBuilder.withRegularItemWithSellInValueAndQualityValue(0, 8).build();
++        updateAndConfirmQualityForEachDayInNDays(app, 3, 8, -2);
++        assertEquals(2, app.items[0].quality);
++    }
++
++    @Test
++    public void givenItemIsAgedBrieAndSellInDateNotPassedYetThenQualityValueIncreaseBy1AsItGetsOlder() {
++        GildedRose app = gildedRoseBuilder.withItemNameAndSellInValueAndQualityValue("Aged Brie", 5, 0).build();
++        updateAndConfirmQualityForEachDayInNDays(app, 5, 0, 1);
++        assertEquals(5, app.items[0].quality);
++    }
++
++    @Test
++    public void givenItemIsAgedBrieAndSellInDatePassedThenQualityValueIncreaseTwiceAsFastAsItGetsOlder() {
++        GildedRose app = gildedRoseBuilder.withItemNameAndSellInValueAndQualityValue("Aged Brie", 0, 0).build();
++        updateAndConfirmQualityForEachDayInNDays(app, 5, 0, 2);
++        assertEquals(10, app.items[0].quality);
++    }
++
++    @Test
++    public void givenItemIsAgedBrieQualityNeverMoreThan50() {
++        GildedRose app = gildedRoseBuilder.withItemNameAndSellInValueAndQualityValue("Aged Brie", 3, 49).build();
++        for(int i=0; i < 3; i++) {
++            app.updateQuality();
++        }
++        assertEquals(50, app.items[0].quality);
++    }
++
++    @Test
++    public void givenItemIsSulfurasSellInValueDoesNotChange() {
++        GildedRose app = gildedRoseBuilder.withItemNameAndSellInValueAndQualityValue("Sulfuras, Hand of Ragnaros", 0, 0).build();
++        app.updateQuality();
++        assertEquals(0, app.items[0].sellIn);
++    }
++
++    @Test
++    public void givenItemIsSulfurasQualityValueDoesNotChange() {
++        GildedRose app = gildedRoseBuilder.withItemNameAndSellInValueAndQualityValue("Sulfuras, Hand of Ragnaros", 0, 0).build();
++        app.updateQuality();
++        assertEquals(0, app.items[0].quality);
++    }
++
++    @Test
++    public void givenItemIsTAFKAAndSellInDateAbove10DaysQualityValueIncreaseBy1AsItGetsOlder() {
++        GildedRose app = gildedRoseBuilder.withItemNameAndSellInValueAndQualityValue("Backstage passes to a TAFKAL80ETC concert", 15, 1).build();
++        updateAndConfirmQualityForEachDayInNDays(app, 5, 1, 1);
++        assertEquals(6, app.items[0].quality);
++    }
++
++    @Test
++    public void givenItemIsTAFKAAndSellInDateBelow10AndAbove5InlusiveDaysQualityValueIncreaseBy2AsItGetsOlder() {
++        GildedRose app = gildedRoseBuilder.withItemNameAndSellInValueAndQualityValue("Backstage passes to a TAFKAL80ETC concert", 9, 1).build();
++        updateAndConfirmQualityForEachDayInNDays(app, 3, 1, 2);
++        assertEquals(7, app.items[0].quality);
++    }
++
++    @Test
++    public void givenItemIsTAFKAQualityisNeverAbove50() {
++        GildedRose app = gildedRoseBuilder.withItemNameAndSellInValueAndQualityValue("Backstage passes to a TAFKAL80ETC concert", 9, 1).build();
++        updateAndConfirmQualityForEachDayInNDays(app, 3, 1, 2);
++        assertEquals(7, app.items[0].quality);
++    }
++
++    @Test
++    public void givenItemIsTAFKAAndSellInDateBelow5InlusiveDaysQualityValueIncreaseBy3AsItGetsOlder() {
++        GildedRose app = gildedRoseBuilder.withItemNameAndSellInValueAndQualityValue("Backstage passes to a TAFKAL80ETC concert", 4, 1).build();
++        updateAndConfirmQualityForEachDayInNDays(app, 3, 1, 3);
++        assertEquals(10, app.items[0].quality);
++    }
++
+     @Test
+-    public void foo() {
+-        Item[] items = new Item[] { new Item("foo", 0, 0) };
+-        GildedRose app = new GildedRose(items);
++    public void givenItemIsTAFKAAndSellInDatePassedQualityValueDropsTo0AfterTheConcert() {
++        GildedRose app = gildedRoseBuilder.withItemNameAndSellInValueAndQualityValue("Backstage passes to a TAFKAL80ETC concert", 0, 5).build();
+         app.updateQuality();
+-        assertEquals("fixme", app.items[0].name);
++        assertEquals(0, app.items[0].quality);
+     }
+ 
++    // adding test cases for conjure???
+ }
+\ No newline at end of file
