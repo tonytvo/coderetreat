@@ -1,4 +1,4 @@
-package org.zuill.talks.codeexcellence.chartsmart;
+package chartsmart;
 
 import java.awt.AWTKeyStroke;
 import java.awt.Color;

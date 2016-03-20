@@ -1,4 +1,4 @@
-package org.zuill.talks.codeexcellence.chartsmart;
+package chartsmart;
 
 import java.util.List;
 
