@@ -1,7 +1,7 @@
 # Game Of Life
 
-Emily Bache: https://vimeo.com/34732838
-Joakim Koarlsson: https://vimeo.com/18293329
+* Emily Bache: https://vimeo.com/34732838
+* Joakim Koarlsson: https://vimeo.com/18293329
 
 # Usage
 
