@@ -5,7 +5,7 @@
 
 # Usage
 
-The purpose of this is to provide good examples for the refactoring workshop.
+The purpose of this is to provide good examples for tdd workshop.
 
 Build
 -----
