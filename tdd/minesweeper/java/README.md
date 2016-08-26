@@ -1,6 +1,7 @@
 # MineSweeper
 
-Emily Bache: https://vimeo.com/34732838
+* Mer & Chie: https://www.youtube.com/watch?v=bGzNOKaJdks
+* Eriberta Canada: https://www.youtube.com/watch?v=CuOpzXIDf9M
 
 # Usage
 
