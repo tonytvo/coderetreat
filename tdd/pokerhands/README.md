@@ -1,5 +1,6 @@
 # Poker Hands
 
+TheKrooKrooMan: https://www.youtube.com/watch?v=FHTHjwi_WuI
 
 # Usage
 
