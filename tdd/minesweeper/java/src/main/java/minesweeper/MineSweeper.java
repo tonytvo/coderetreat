@@ -1,4 +1,4 @@
-package gameoflife;
+package minesweeper;
 
 public class MineSweeper {
 
