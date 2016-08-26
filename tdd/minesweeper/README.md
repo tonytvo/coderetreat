@@ -1,7 +1,6 @@
 # MineSweeper
 
-* Emily Bache: https://vimeo.com/34732838
-* Joakim Koarlsson: https://vimeo.com/18293329, https://vimeo.com/18350401
+* Eriberta Canada: https://www.youtube.com/watch?v=CuOpzXIDf9M
 
 # Usage
 
