@@ -1,7 +1,7 @@
 # Poker Hands
 
-TheKrooKrooMan: https://www.youtube.com/watch?v=FHTHjwi_WuI
-My attempt: 
+- TheKrooKrooMan: https://www.youtube.com/watch?v=FHTHjwi_WuI
+- My attempt: 
   - part 1: https://www.youtube.com/watch?v=ZdNrs_1SldQ
   - part 2: https://www.youtube.com/watch?v=pTotzewbsjE
 
