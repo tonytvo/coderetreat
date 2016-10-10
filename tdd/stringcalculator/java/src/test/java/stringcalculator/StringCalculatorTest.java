@@ -32,6 +32,15 @@ public class StringCalculatorTest {
     *    should return 6
     * 8) Allow multiple delimeters like this: "//[delim1][delim2]\n" for example "//[*][%]\n1*2%3" should return 6
     * 9) make sure you can handle multiple delimiters with length longer than one char
+    * 
+    * Behaviour Test
+    *
+    * 10) Everytime you call Add(string) it also outputs the number of result of the calculation in a new line to the terminal or console
+    * 11) Create a program (test first) that uses string calculator, which the user can invoke through
+    *     the terminal/console by calling "scalc '1,2'3'" and will output the following line before before exiting: "The result is 6"
+    * 12) Instead of exiting after the first result, the program will ask the user for "another input please"
+    *     and print the result of the new user input out as well, until the user gives no input and
+    *     just presses enter, in that case it will exit.
     *
     *************************/
 
