@@ -1,7 +1,7 @@
 # String Calculator
 
 * Roy Osherove: http://osherove.com/tdd-kata-1/
-* My attemp at this: 
+* My attemp at this: https://www.youtube.com/watch?v=8cwKn2r6r4A
 
 # String Calculator
 
