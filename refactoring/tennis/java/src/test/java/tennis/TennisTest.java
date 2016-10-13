@@ -1,3 +1,5 @@
+package tennis;
+
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
