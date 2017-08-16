@@ -27,6 +27,3 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-// Define the main class for the application
-mainClassName = 'App'
-
