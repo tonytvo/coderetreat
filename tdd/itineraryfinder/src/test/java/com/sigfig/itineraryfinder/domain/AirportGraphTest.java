@@ -14,24 +14,24 @@ import static com.sigfig.itineraryfinder.domain.Airport.*;
 
 public class AirportGraphTest {
     @Test
-    public void shouldGenerateCorrectGraphWith3Vertices() throws Exception {
-        List<Flight> scheduledFlights = FlightsDataGenerator.setupStandardScheduledFlightsWith1ConnectingFlight();
+    public void givenATripWith1ConnectingFlightShouldGenerateCorrectGraphWith3Vertices() throws Exception {
+        List<Flight> scheduledFlights = FlightsDataGenerator.setupStandardTripWith1ConnectingFlight();
         AirportGraph graph = AirportGraph.from(scheduledFlights);
-        List<Airport> actualVertices = graph.getVertices();
-        List<Airport> expectedVertices = Arrays.asList(SFO, IAD, OFK);
 
+        List<Airport> actualVertices = graph.getVertices();
+
+        List<Airport> expectedVertices = Arrays.asList(SFO, IAD, OFK);
         assertListEquals(expectedVertices, actualVertices);
     }
 
     @Test
-    public void shouldGenerateCorrectGraphWith2Edges() throws Exception {
-        List<Flight> scheduledFlights = FlightsDataGenerator.setupStandardScheduledFlightsWith1ConnectingFlight();
+    public void givenATripWith1ConnectingFlightShouldGenerateCorrectGraphWith2Edges() throws Exception {
+        List<Flight> scheduledFlights = FlightsDataGenerator.setupStandardTripWith1ConnectingFlight();
         AirportGraph graph = AirportGraph.from(scheduledFlights);
-        List<Pair<Airport, Airport>> actualEdges= graph.getEdges();
-        List<Pair<Airport, Airport>> expectedEdges = Arrays.asList(new Pair<>(SFO, OFK),
-                new Pair<>(OFK, IAD));
 
-        assertListEquals(expectedEdges, actualEdges);
+        List<Pair<Airport, Airport>> actualEdges= graph.getEdges();
+
+        assertListEquals(Arrays.asList(new Pair<>(SFO, OFK), new Pair<>(OFK, IAD)), actualEdges);
     }
 
     @Test
@@ -39,7 +39,9 @@ public class AirportGraphTest {
         Set<Airport> vertices = Sets.newHashSet(SFO, OFK);
         AirportGraph graph = new AirportGraph(vertices);
         graph.addEdge(SFO, OFK);
+
         List<List<Airport>> actualPaths = graph.getAllPaths(SFO, OFK);
+
         List<List<Airport>> expectedPaths = Arrays.asList(Lists.newArrayList(SFO, OFK));
         assertListEquals(expectedPaths, actualPaths);
     }

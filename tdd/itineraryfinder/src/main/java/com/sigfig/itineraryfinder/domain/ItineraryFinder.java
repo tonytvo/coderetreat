@@ -1,9 +1,8 @@
 package com.sigfig.itineraryfinder.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import com.google.common.collect.Lists;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 class ItineraryFinder {
@@ -16,25 +15,37 @@ class ItineraryFinder {
         if (allPaths.isEmpty()) {
             return new Itinerary(Collections.emptyList());
         }
-        return new Itinerary(getFlightsMatchPath(allPaths.get(0), scheduledFlights));
+
+        List<Itinerary> allFlightsMatched = getAllItinerariesMatchPaths(allPaths, scheduledFlights);
+        Itinerary resultItinerary = allFlightsMatched.stream().min(Comparator.comparing(itinerary -> itinerary.getFinalArrivalTime())).get();
+        return resultItinerary;
     }
 
-    protected List<Flight> getFlightsMatchPath(List<Airport> path, List<Flight> scheduledFlights) {
-        Airport firstAirport = path.remove(0);
-        Iterator<Airport> airportIterator = path.iterator();
-        List<Flight> resultFlights = new ArrayList<>();
-        while(airportIterator.hasNext()) {
-            Airport secondAirport = airportIterator.next();
-            Flight matchingFlight = getFirstFlightWithSourceAndDestinationAirport(scheduledFlights, firstAirport, secondAirport);
-            resultFlights.add(matchingFlight);
+    protected List<Itinerary> getAllItinerariesMatchPaths(List<List<Airport>> paths, List<Flight> scheduledFlights) {
+        List<Itinerary> allMatchFlights = Lists.newArrayList();
+        paths.forEach( path -> allMatchFlights.addAll(getAllItinerariesMatchSinglePath(scheduledFlights, path)) );
+        return allMatchFlights;
+
+    }
+
+    private List<Itinerary> getAllItinerariesMatchSinglePath(List<Flight> scheduledFlights, List<Airport> path) {
+        Iterator<Airport> pathIterator = path.iterator();
+        Airport firstAirport = pathIterator.next();
+        List<List<Flight>> allFlightsMatchEdgesFromPath = Lists.newArrayList();
+        while(pathIterator.hasNext()) {
+            Airport secondAirport = pathIterator.next();
+            allFlightsMatchEdgesFromPath.add(getFlightsMatchSourceAndDestination(scheduledFlights, firstAirport, secondAirport));
             firstAirport = secondAirport;
         }
-        return resultFlights;
+
+        List<List<Flight>> allFlights = Lists.cartesianProduct(allFlightsMatchEdgesFromPath);
+        return allFlights.stream()
+                .map(flight -> new Itinerary(flight)).collect(Collectors.toList());
     }
 
-    private Flight getFirstFlightWithSourceAndDestinationAirport(List<Flight> scheduledFlights, Airport firstAirport, Airport secondAirport) {
+    private List<Flight> getFlightsMatchSourceAndDestination(List<Flight> scheduledFlights, Airport firstAirport, Airport secondAirport) {
         return scheduledFlights.stream()
-                        .filter( flight -> flight.getDestinationAirport() == secondAirport && flight.getSourceAirport() == firstAirport)
-                        .collect(Collectors.toList()).get(0);
+                .filter( flight -> flight.getSourceAirport() == firstAirport && flight.getDestinationAirport() == secondAirport )
+                .collect(Collectors.toList());
     }
 }
