@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import java.util.*;
 import java.util.stream.Collectors;
 
-class ItineraryFinder {
+public class ItineraryFinder {
     /**
      * This function would find the earliest possible itinerary for given sourceAirport, destination airport and list of
      * scheduled flights

@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-class Itinerary {
+public class Itinerary {
 
     public static final int ALLOWABLE_GAP_BETWEEN_LAYOVER = 20;
 
@@ -72,6 +73,10 @@ class Itinerary {
             arrivalTime = nextFlight.getArrivalTime();
         }
         return true;
+    }
+
+    public String printItinerary() {
+        return String.join("\n", flights.stream().map( flight -> flight.flightInfo() ).collect(Collectors.toList()));
     }
 
     private boolean isThereEnoughGapBetweenLayover(LocalDateTime arrivalTime, LocalDateTime nextFlightDepartureTime) {

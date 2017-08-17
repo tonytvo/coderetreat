@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
@@ -60,7 +59,7 @@ public class ItineraryFinderTest {
     public void shouldNotReturnItineraryGivenSourceAirportDoesNotMatch() throws Exception {
         List<Flight> scheduledFlights = new ArrayList<>();
         scheduledFlights.add(SFO_OFK_2017_APRIL_1ST_5_TO_8);
-        Itinerary itinerary = itineraryFinder.findItinerary(scheduledFlights, OFK, IAD);
+        Itinerary itinerary = itineraryFinder.findItinerary(scheduledFlights, OAK, IAD);
         Assert.assertEquals("there should be no flights as source airport doesn't match",
                 0, itinerary.getNumFlights());
     }
@@ -83,14 +82,14 @@ public class ItineraryFinderTest {
 
     @Test
     public void givenSinglePathOf3VerticesShouldReturn4FlightsMatched() throws Exception {
-        List<List<Airport>> paths = Arrays.asList(Lists.newArrayList(SFO, OFK, IAD));
+        List<List<Airport>> paths = Arrays.asList(Lists.newArrayList(SFO, OAK, IAD));
 
         List<Flight> scheduledFlights = new ArrayList<>();
         scheduledFlights.add(SFO_OFK_2017_APRIL_1ST_5_TO_8);
-        Flight sfoToOFK2017April2nd15 = new Flight("111", SFO, OFK, APRIL_2ND_2017_13, APRIL_2ND_2017_15);
+        Flight sfoToOFK2017April2nd15 = new Flight("111", SFO, OAK, APRIL_2ND_2017_13, APRIL_2ND_2017_15);
         scheduledFlights.add(sfoToOFK2017April2nd15);
         scheduledFlights.add(OFK_IAD_2017_APRIL_1ST_10_TO_13);
-        Flight ofkToIAD2017April2nd15 = new Flight("111", OFK, IAD, APRIL_2ND_2017_13, APRIL_2ND_2017_15);
+        Flight ofkToIAD2017April2nd15 = new Flight("111", OAK, IAD, APRIL_2ND_2017_13, APRIL_2ND_2017_15);
         scheduledFlights.add(ofkToIAD2017April2nd15);
 
         List<Itinerary> matchingItineraries = itineraryFinder.getAllItinerariesMatchPaths(paths, scheduledFlights);
@@ -104,14 +103,14 @@ public class ItineraryFinderTest {
 
     @Test
     public void given2PathsShouldReturn6FlightsMatched() throws Exception {
-        List<List<Airport>> paths = Arrays.asList(Lists.newArrayList(SFO, OFK, IAD), Lists.newArrayList(SFO, IAD));
+        List<List<Airport>> paths = Arrays.asList(Lists.newArrayList(SFO, OAK, IAD), Lists.newArrayList(SFO, IAD));
 
         List<Flight> scheduledFlights = new ArrayList<>();
         scheduledFlights.add(SFO_OFK_2017_APRIL_1ST_5_TO_8);
-        Flight sfoToOFK2017April2nd15 = new Flight("111", SFO, OFK, APRIL_2ND_2017_13, APRIL_2ND_2017_15);
+        Flight sfoToOFK2017April2nd15 = new Flight("111", SFO, OAK, APRIL_2ND_2017_13, APRIL_2ND_2017_15);
         scheduledFlights.add(sfoToOFK2017April2nd15);
         scheduledFlights.add(OFK_IAD_2017_APRIL_1ST_10_TO_13);
-        Flight ofkToIAD2017April2nd15 = new Flight("111", OFK, IAD, APRIL_2ND_2017_13, APRIL_2ND_2017_15);
+        Flight ofkToIAD2017April2nd15 = new Flight("111", OAK, IAD, APRIL_2ND_2017_13, APRIL_2ND_2017_15);
         scheduledFlights.add(ofkToIAD2017April2nd15);
         scheduledFlights.add(SFO_IAD_2017_APRIL_1ST_13_TO_15);
         Flight sfoToIAD2017April2nd15 = new Flight("111", SFO, IAD, APRIL_2ND_2017_13, APRIL_2ND_2017_15);
@@ -154,7 +153,7 @@ public class ItineraryFinderTest {
         scheduledFlights.add(SFO_IAD_2017_APRIL_1ST_13_TO_15);
         scheduledFlights.add(SFO_OFK_2017_APRIL_1ST_5_TO_8);
         scheduledFlights.add(OFK_IAD_2017_APRIL_1ST_10_TO_13);
-        scheduledFlights.add(new Flight("111", OFK, IAD, LocalDateTime.parse("2017-04-01T08:11:00"), APRIL_1ST_2017_10));
+        scheduledFlights.add(new Flight("111", OAK, IAD, LocalDateTime.parse("2017-04-01T08:11:00"), APRIL_1ST_2017_10));
         Itinerary itinerary = itineraryFinder.findItinerary(scheduledFlights, SFO, IAD);
         Assert.assertEquals(APRIL_1ST_2017_13, itinerary.getFinalArrivalTime());
     }

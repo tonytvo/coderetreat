@@ -2,12 +2,23 @@ package com.sigfig.itineraryfinder.domain;
 
 import java.time.LocalDateTime;
 
-class Flight {
+public class Flight {
     private Airport sourceAirport;
     private Airport destinationAirport;
     private LocalDateTime arrivalTime;
     private LocalDateTime departureTime;
     private String flightNumber;
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "sourceAirport=" + sourceAirport +
+                ", destinationAirport=" + destinationAirport +
+                ", arrivalTime=" + arrivalTime +
+                ", departureTime=" + departureTime +
+                ", flightNumber='" + flightNumber + '\'' +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -56,5 +67,11 @@ class Flight {
 
     public LocalDateTime getDepartureTime() {
         return departureTime;
+    }
+
+    public String flightInfo() {
+        return String.format("Board flight %s to depart %s at %s and arrive at %s at %s",
+                flightNumber, sourceAirport.toString(), departureTime,
+                destinationAirport.toString(), arrivalTime);
     }
 }

@@ -1,3 +1,4 @@
+# Business Requirements
 Your task is to build a tool for the ticketing desk of an airline to find the best possible itinerary for
 a customer at the desk who wants to reach a particular destination at the earliest possible time.
 You may assume that the customer doesn’t care about price or the number of connecting
@@ -44,3 +45,15 @@ Board flight 451 to depart OAK at 2017-01-26T04:01:00Z and arrive at IAD at 2017
 One final requirement- an itinerary is not valid if the customer doesn’t have at least 20 minutes
 to get between their arrival gate and their departure gate during a layover. Since the layover at
 OAK in the above example is longer than 20 minutes, the above itinerary is valid.
+
+# Usage
+- Required Java 1.8+
+- On Linux, OSX, Windows 10+ powershell:
+```
+./gradlew run
+```
+- On Windows 7, 8 (not including Windows 10+ powershell)
+```
+gradlew run
+```
+- Import project through Intellij: File -> Open -> build.gradle
