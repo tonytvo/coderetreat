@@ -6,6 +6,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 class ItineraryFinder {
+    /**
+     * This function would find the earliest possible itinerary for given sourceAirport, destination airport and list of
+     * scheduled flights
+     * Note that it will ignore any itineraries that don't have enough 20 minutes gap between layover
+     * @param scheduledFlights list of scheduled flights
+     * @param sourceAirport departure airport
+     * @param destinationAirport arrival airport
+     * @return earliest possible itinerary (final flight that has the earliest arrival time)
+     */
     public Itinerary findItinerary(List<Flight> scheduledFlights, Airport sourceAirport, Airport destinationAirport) {
         if (scheduledFlights.size() == 0)
             return new Itinerary(Collections.emptyList());
@@ -16,16 +25,34 @@ class ItineraryFinder {
             return new Itinerary(Collections.emptyList());
         }
 
-        List<Itinerary> allFlightsMatched = getAllItinerariesMatchPaths(allPaths, scheduledFlights);
-        Itinerary resultItinerary = allFlightsMatched.stream().min(Comparator.comparing(itinerary -> itinerary.getFinalArrivalTime())).get();
-        return resultItinerary;
+        List<Itinerary> allItinerariesMatchedGivenPaths = getAllItinerariesMatchPaths(allPaths, scheduledFlights);
+
+        List<Itinerary> validItineraries = filterValidItineraries(allItinerariesMatchedGivenPaths);
+
+        return getItineraryWithEarliestArrivalTime(validItineraries);
     }
 
+    /**
+     * Given a list of scheduled flights and list of paths from one airport to another airport
+     * It would find all possible itinerary with flight schedules match with the specified paths
+     * i.e.: given path a->b, and flight schedules a->b, b->c, this function would return Itinerary of a->b
+     * @param paths
+     * @param scheduledFlights
+     * @return
+     */
     protected List<Itinerary> getAllItinerariesMatchPaths(List<List<Airport>> paths, List<Flight> scheduledFlights) {
         List<Itinerary> allMatchFlights = Lists.newArrayList();
         paths.forEach( path -> allMatchFlights.addAll(getAllItinerariesMatchSinglePath(scheduledFlights, path)) );
         return allMatchFlights;
 
+    }
+
+    private List<Itinerary> filterValidItineraries(List<Itinerary> allFlightsMatched) {
+        return allFlightsMatched.stream().filter( itinerary -> itinerary.isValid() ).collect(Collectors.toList());
+    }
+
+    private Itinerary getItineraryWithEarliestArrivalTime(List<Itinerary> validFlights) {
+        return validFlights.stream().min(Comparator.comparing(itinerary -> itinerary.getFinalArrivalTime())).get();
     }
 
     private List<Itinerary> getAllItinerariesMatchSinglePath(List<Flight> scheduledFlights, List<Airport> path) {

@@ -3,9 +3,13 @@ package com.sigfig.itineraryfinder.domain;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 class Itinerary {
+
+    public static final int ALLOWABLE_GAP_BETWEEN_LAYOVER = 20;
+
     @Override
     public String toString() {
         return "Itinerary{" +
@@ -52,5 +56,25 @@ class Itinerary {
     @Override
     public int hashCode() {
         return flights != null ? flights.hashCode() : 0;
+    }
+
+    /**
+     * @return valid if there's enough 20 minutes gap between layover
+     */
+    public boolean isValid() {
+        Iterator<Flight> flightsIterator = flights.iterator();
+        LocalDateTime arrivalTime = flightsIterator.next().getArrivalTime();
+        while(flightsIterator.hasNext()) {
+            Flight nextFlight = flightsIterator.next();
+            LocalDateTime nextFlightDepartureTime = nextFlight.getDepartureTime();
+            if (!isThereEnoughGapBetweenLayover(arrivalTime, nextFlightDepartureTime))
+                return false;
+            arrivalTime = nextFlight.getArrivalTime();
+        }
+        return true;
+    }
+
+    private boolean isThereEnoughGapBetweenLayover(LocalDateTime arrivalTime, LocalDateTime nextFlightDepartureTime) {
+        return nextFlightDepartureTime.minusMinutes(ALLOWABLE_GAP_BETWEEN_LAYOVER).isAfter(arrivalTime);
     }
 }

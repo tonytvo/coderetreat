@@ -14,8 +14,8 @@ import static com.sigfig.itineraryfinder.domain.Airport.*;
 
 public class AirportGraphTest {
     @Test
-    public void givenATripWith1ConnectingFlightShouldGenerateCorrectGraphWith3Vertices() throws Exception {
-        List<Flight> scheduledFlights = FlightsDataGenerator.setupStandardTripWith1ConnectingFlight();
+    public void givenItineraryWith1ConnectingFlightShouldGenerateCorrectGraphWith3Vertices() throws Exception {
+        List<Flight> scheduledFlights = FlightBuilder.setupStandardTripWith1ConnectingFlight();
         AirportGraph graph = AirportGraph.from(scheduledFlights);
 
         List<Airport> actualVertices = graph.getVertices();
@@ -25,8 +25,8 @@ public class AirportGraphTest {
     }
 
     @Test
-    public void givenATripWith1ConnectingFlightShouldGenerateCorrectGraphWith2Edges() throws Exception {
-        List<Flight> scheduledFlights = FlightsDataGenerator.setupStandardTripWith1ConnectingFlight();
+    public void givenItineraryWith1ConnectingFlightShouldGenerateCorrectGraphWith2Edges() throws Exception {
+        List<Flight> scheduledFlights = FlightBuilder.setupStandardTripWith1ConnectingFlight();
         AirportGraph graph = AirportGraph.from(scheduledFlights);
 
         List<Pair<Airport, Airport>> actualEdges= graph.getEdges();
@@ -53,7 +53,9 @@ public class AirportGraphTest {
         graph.addEdge(SFO, IAD);
         graph.addEdge(SFO, OFK);
         graph.addEdge(OFK, IAD);
+
         List<List<Airport>> actualPaths = graph.getAllPaths(SFO, IAD);
+
         List<List<Airport>> expectedPaths = Arrays.asList(Lists.newArrayList(SFO, IAD),
                 Lists.newArrayList(SFO, OFK, IAD));
         assertListEquals(expectedPaths, actualPaths);
@@ -68,7 +70,9 @@ public class AirportGraphTest {
         graph.addEdge(OFK, IAD);
         graph.addEdge(SFO, AUD);
         graph.addEdge(AUD, IAD);
+
         List<List<Airport>> actualPaths = graph.getAllPaths(SFO, IAD);
+
         List<List<Airport>> expectedPaths = Arrays.asList(Lists.newArrayList(SFO, IAD),
                 Lists.newArrayList(SFO, OFK, IAD),
                 Lists.newArrayList(SFO, AUD, IAD));
@@ -85,7 +89,9 @@ public class AirportGraphTest {
         graph.addEdge(OFK, AUD);
         graph.addEdge(OFK, IAD);
         graph.addEdge(AUD, IAD);
+
         List<List<Airport>> actualPaths = graph.getAllPaths(SFO, IAD);
+
         List<List<Airport>> expectedPaths = Arrays.asList(Lists.newArrayList(SFO, AUD, IAD),
                 Lists.newArrayList(SFO, OFK, IAD),
                 Lists.newArrayList(SFO, OFK, AUD, IAD));
