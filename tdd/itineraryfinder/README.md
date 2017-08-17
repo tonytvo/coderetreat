@@ -60,3 +60,12 @@ OAK in the above example is longer than 20 minutes, the above itinerary is valid
 # test reports are generated and located in build/reports/tests/test/index.html 
 ```
 - Import project through Intellij: File -> Open -> build.gradle
+
+# Note
+- I organize code retreat event every year (it's an 8 hour even of pair programming, tdd, etc...)
+- Here's the list of screen casts I have made and collected:
+  - https://www.youtube.com/playlist?list=PL51Z0kRZnNoFoSiXtwEe8Af6_ImP8pllk
+- I have also made the screen cast of this assignment:
+  - https://www.youtube.com/watch?v=mv-aHMdUXVE&index=33&list=PL51Z0kRZnNoFoSiXtwEe8Af6_ImP8pllk&t=675s 
+- The screen cast doesn't contain the complete working product as I couldn't put all of the requirements into 1-2 hours screen cast. However, this should reflect the big part of the business logic and a good representation on how I approach programming on a daily basis with TDD and incremental approach.  
+ 
