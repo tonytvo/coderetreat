@@ -10,10 +10,10 @@ public class ItineraryFinder {
      * This function would find the earliest possible itinerary for given sourceAirport, destination airport and list of
      * scheduled flights
      * Note that it will ignore any itineraries that don't have enough 20 minutes gap between layover
-     * @param scheduledFlights list of scheduled flights
+     * @param scheduledFlights list of scheduled flights info
      * @param sourceAirport departure airport
      * @param destinationAirport arrival airport
-     * @return earliest possible itinerary (final flight that has the earliest arrival time)
+     * @return earliest possible itinerary (all flights including connecting flights that has the earliest arrival time)
      */
     public Itinerary findItinerary(List<Flight> scheduledFlights, Airport sourceAirport, Airport destinationAirport) {
         if (scheduledFlights.size() == 0)
@@ -36,9 +36,9 @@ public class ItineraryFinder {
      * Given a list of scheduled flights and list of paths from one airport to another airport
      * It would find all possible itinerary with flight schedules match with the specified paths
      * i.e.: given path a->b, and flight schedules a->b, b->c, this function would return Itinerary of a->b
-     * @param paths
-     * @param scheduledFlights
-     * @return
+     * @param paths each path is a list of airport (each airport can be viewed as a node in a graph)
+     * @param scheduledFlights available scheduled flights info such as departure airport, arrival time, etc...
+     * @return list of all itineraries that match the given paths
      */
     protected List<Itinerary> getAllItinerariesMatchPaths(List<List<Airport>> paths, List<Flight> scheduledFlights) {
         List<Itinerary> allMatchFlights = Lists.newArrayList();

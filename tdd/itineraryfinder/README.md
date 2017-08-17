@@ -47,13 +47,16 @@ to get between their arrival gate and their departure gate during a layover. Sin
 OAK in the above example is longer than 20 minutes, the above itinerary is valid.
 
 # Usage
-- Required Java 1.8+
-- On Linux, OSX, Windows 10+ powershell:
+- Requires Java 1.8+
+- On Linux, OSX and Windows 10+ powershell use ```./gradlew``` and on Windows 7, 8 use ```gradlew```.
+- ```./gradlew``` is used by default in the below commands
+- To Run the application
 ```
 ./gradlew run
 ```
-- On Windows 7, 8 (not including Windows 10+ powershell)
+- To run tests
 ```
-gradlew run
+./gradlew build
+# test reports are generated and located in build/reports/tests/test/index.html 
 ```
 - Import project through Intellij: File -> Open -> build.gradle

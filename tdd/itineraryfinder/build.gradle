@@ -28,6 +28,12 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+test {
+    testLogging {
+        showStandardStreams true
+        events "passed", "skipped", "failed", "started", "standard_out", "standard_error"
+    }
+}
 // Define the main class for the application
 mainClassName = 'com.sigfig.itineraryfinder.application.ItineraryFinderApp'
 

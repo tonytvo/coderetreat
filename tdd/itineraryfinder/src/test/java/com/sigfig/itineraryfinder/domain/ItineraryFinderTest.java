@@ -27,7 +27,9 @@ public class ItineraryFinderTest {
     @Test
     public void shouldAcceptEmptyScheduledFlight() throws Exception {
         List<Flight> scheduledFlights = Collections.emptyList();
+
         Itinerary itinerary = itineraryFinder.findItinerary(scheduledFlights, SFO, IAD);
+
         Assert.assertEquals("there should be no flights", 0, itinerary.getNumFlights());
     }
 
@@ -35,7 +37,9 @@ public class ItineraryFinderTest {
     public void shouldReturnItineraryWithSingleFlight() throws Exception {
         List<Flight> scheduledFlights = new ArrayList<>();
         scheduledFlights.add(SFO_IAD_2017_APRIL_1ST_13_TO_15);
+
         Itinerary itinerary = itineraryFinder.findItinerary(scheduledFlights, SFO, IAD);
+
         Assert.assertEquals("there should be no flights", 1, itinerary.getNumFlights());
     }
 
@@ -43,14 +47,18 @@ public class ItineraryFinderTest {
     public void shouldReturnItineraryWithExpectedDepartureAndArrivalAirport() throws Exception {
         List<Flight> scheduledFlights = new ArrayList<>();
         scheduledFlights.add(SFO_IAD_2017_APRIL_1ST_13_TO_15);
+
         Itinerary itinerary = itineraryFinder.findItinerary(scheduledFlights, SFO, IAD);
+
         assertDepartureAndArrivalAirportEquals(SFO, IAD, itinerary);
     }
 
     @Test
     public void shouldReturnItineraryWith1ConnectingFlight() throws Exception {
         List<Flight> scheduledFlights = FlightBuilder.setupStandardTripWith1ConnectingFlight();
+
         Itinerary itinerary = itineraryFinder.findItinerary(scheduledFlights, SFO, IAD);
+
         Assert.assertEquals("there should be 2 flights", 2, itinerary.getNumFlights());
         assertDepartureAndArrivalAirportEquals(SFO, IAD, itinerary);
     }
@@ -59,7 +67,9 @@ public class ItineraryFinderTest {
     public void shouldNotReturnItineraryGivenSourceAirportDoesNotMatch() throws Exception {
         List<Flight> scheduledFlights = new ArrayList<>();
         scheduledFlights.add(SFO_OFK_2017_APRIL_1ST_5_TO_8);
+
         Itinerary itinerary = itineraryFinder.findItinerary(scheduledFlights, OAK, IAD);
+
         Assert.assertEquals("there should be no flights as source airport doesn't match",
                 0, itinerary.getNumFlights());
     }
@@ -94,7 +104,6 @@ public class ItineraryFinderTest {
 
         List<Itinerary> matchingItineraries = itineraryFinder.getAllItinerariesMatchPaths(paths, scheduledFlights);
 
-        System.out.println(matchingItineraries);
         Assert.assertTrue(matchingItineraries.contains(Itinerary.of(SFO_OFK_2017_APRIL_1ST_5_TO_8, OFK_IAD_2017_APRIL_1ST_10_TO_13)));
         Assert.assertTrue(matchingItineraries.contains(Itinerary.of(SFO_OFK_2017_APRIL_1ST_5_TO_8, ofkToIAD2017April2nd15)));
         Assert.assertTrue(matchingItineraries.contains(Itinerary.of(sfoToOFK2017April2nd15, OFK_IAD_2017_APRIL_1ST_10_TO_13)));
@@ -118,7 +127,6 @@ public class ItineraryFinderTest {
 
         List<Itinerary> matchingItineraries = itineraryFinder.getAllItinerariesMatchPaths(paths, scheduledFlights);
 
-        System.out.println(matchingItineraries);
         Assert.assertTrue(matchingItineraries.contains(Itinerary.of(SFO_OFK_2017_APRIL_1ST_5_TO_8, OFK_IAD_2017_APRIL_1ST_10_TO_13)));
         Assert.assertTrue(matchingItineraries.contains(Itinerary.of(SFO_OFK_2017_APRIL_1ST_5_TO_8, ofkToIAD2017April2nd15)));
         Assert.assertTrue(matchingItineraries.contains(Itinerary.of(sfoToOFK2017April2nd15, OFK_IAD_2017_APRIL_1ST_10_TO_13)));

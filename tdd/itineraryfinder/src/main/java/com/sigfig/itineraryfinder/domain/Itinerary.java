@@ -11,11 +11,24 @@ public class Itinerary {
 
     public static final int ALLOWABLE_GAP_BETWEEN_LAYOVER = 20;
 
-    @Override
-    public String toString() {
-        return "Itinerary{" +
-                "flights=" + flights +
-                '}';
+    /**
+     * @return valid if there's enough 20 minutes gap between layover
+     */
+    public boolean isValid() {
+        Iterator<Flight> flightsIterator = flights.iterator();
+        LocalDateTime arrivalTime = flightsIterator.next().getArrivalTime();
+        while(flightsIterator.hasNext()) {
+            Flight nextFlight = flightsIterator.next();
+            LocalDateTime nextFlightDepartureTime = nextFlight.getDepartureTime();
+            if (!isThereEnoughGapBetweenLayover(arrivalTime, nextFlightDepartureTime))
+                return false;
+            arrivalTime = nextFlight.getArrivalTime();
+        }
+        return true;
+    }
+
+    public String printItinerary() {
+        return String.join("\n", flights.stream().map( flight -> flight.flightInfo() ).collect(Collectors.toList()));
     }
 
     private List<Flight> flights = new ArrayList<>();
@@ -59,27 +72,14 @@ public class Itinerary {
         return flights != null ? flights.hashCode() : 0;
     }
 
-    /**
-     * @return valid if there's enough 20 minutes gap between layover
-     */
-    public boolean isValid() {
-        Iterator<Flight> flightsIterator = flights.iterator();
-        LocalDateTime arrivalTime = flightsIterator.next().getArrivalTime();
-        while(flightsIterator.hasNext()) {
-            Flight nextFlight = flightsIterator.next();
-            LocalDateTime nextFlightDepartureTime = nextFlight.getDepartureTime();
-            if (!isThereEnoughGapBetweenLayover(arrivalTime, nextFlightDepartureTime))
-                return false;
-            arrivalTime = nextFlight.getArrivalTime();
-        }
-        return true;
-    }
-
-    public String printItinerary() {
-        return String.join("\n", flights.stream().map( flight -> flight.flightInfo() ).collect(Collectors.toList()));
-    }
-
     private boolean isThereEnoughGapBetweenLayover(LocalDateTime arrivalTime, LocalDateTime nextFlightDepartureTime) {
         return nextFlightDepartureTime.minusMinutes(ALLOWABLE_GAP_BETWEEN_LAYOVER).isAfter(arrivalTime);
+    }
+
+    @Override
+    public String toString() {
+        return "Itinerary{" +
+                "flights=" + flights +
+                '}';
     }
 }
