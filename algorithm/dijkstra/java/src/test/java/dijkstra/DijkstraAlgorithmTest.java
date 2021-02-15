@@ -1,4 +1,4 @@
-package gameoflife;
+package java.dijkstra;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * Created by Tony on 1/15/2016.
  */
-public class PokerHandsTest {
+public class DijkstraAlgorithmTest {
 
     // TODO
     // Any live cell with fewer than two live neighbours dies, as if caused by under-population
