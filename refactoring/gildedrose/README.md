@@ -16,6 +16,7 @@ Whichever testing approach you choose, the idea of the exercise is to do some de
 - https://www.youtube.com/watch?v=iwWqlqXzrwU
 - https://vimeo.com/32427432
 - https://github.com/ArturT/GildedRose-Refactoring-Kata/blob/solutions/ruby/spec/gilded_rose_spec.rb
+- https://www.youtube.com/watch?v=wp6oSVDdbXQ&ab_channel=CraftHubEvents
 - My attempt at this: https://www.youtube.com/watch?v=X19DOFZjN18
 
 # Usage
