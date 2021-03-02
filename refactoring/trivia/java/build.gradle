@@ -8,3 +8,14 @@ repositories {
 dependencies {
     testCompile 'junit:junit:4.12'
 }
+
+ext {
+    javaMainClass = "com.adaptionsoft.games.trivia.runner.GameRunner"
+}
+
+task runGameRunner(type: JavaExec) {
+    group = "Execution"
+    description = "Run the main GameRunner class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    main = javaMainClass
+}
