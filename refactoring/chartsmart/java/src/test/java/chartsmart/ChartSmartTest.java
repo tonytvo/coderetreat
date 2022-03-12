@@ -1,11 +1,12 @@
 package chartsmart;
 
 import org.approvaltests.Approvals;
+import org.approvaltests.awt.AwtApprovals;
 import org.approvaltests.reporters.ImageReporter;
 import org.approvaltests.reporters.UseReporter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @UseReporter(ImageReporter.class)
 public class ChartSmartTest {
@@ -13,14 +14,14 @@ public class ChartSmartTest {
     @Test
 	public void testMainWindow() throws Exception {
 		ChartSmart chartSmart = new ChartSmart();
-		Approvals.verify(chartSmart);
+		AwtApprovals.verify(chartSmart);
 	}
 
 	@Test
 	public void testBarChartWindow() throws Exception {
 		ChartWindow chartSmart = new ChartWindow();
 		chartSmart.iniDS(406, "rpfll", true);
-		Approvals.verify(chartSmart);
+		AwtApprovals.verify(chartSmart);
 		assertEquals("Bar Chart - Single Mode", chartSmart.getTitle());
 	}
 
@@ -28,7 +29,7 @@ public class ChartSmartTest {
 	public void testPieChartWindow() throws Exception {
 		ChartWindow chartSmart = new ChartWindow();
 		chartSmart.iniDS(323, "rpfll", true);
-		Approvals.verify(chartSmart);
+		AwtApprovals.verify(chartSmart);
 		assertEquals("Pie Chart - Single Mode", chartSmart.getTitle());
 	}
 
@@ -36,7 +37,7 @@ public class ChartSmartTest {
 	public void testBarChartSmallWindow() throws Exception {
 		ChartWindow chartSmart = new ChartWindow();
 		chartSmart.iniDS(406, "shareddisplay", true);
-		Approvals.verify(chartSmart);
+		AwtApprovals.verify(chartSmart);
 		assertEquals("Bar Chart - Compare Mode", chartSmart.getTitle());
 	}
 
@@ -44,7 +45,7 @@ public class ChartSmartTest {
 	public void testPieChartSmallWindow() throws Exception {
 		ChartWindow chartSmart = new ChartWindow();
 		chartSmart.iniDS(323, "shareddisplay", true);
-		Approvals.verify(chartSmart);
+		AwtApprovals.verify(chartSmart);
 		assertEquals("Pie Chart - Compare Mode", chartSmart.getTitle());
 	}
 }
