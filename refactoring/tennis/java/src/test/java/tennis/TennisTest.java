@@ -1,30 +1,29 @@
 package tennis;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
-@RunWith(Parameterized.class)
 public class TennisTest {
 
-    private int player1Score;
-    private int player2Score;
-    private String expectedScore;
+    public static class PlayerScore {
+        private int player1Score;
+        private int player2Score;
+        private String expectedScore;
 
-    public TennisTest(int player1Score, int player2Score, String expectedScore) {
-        this.player1Score = player1Score;
-        this.player2Score = player2Score;
-        this.expectedScore = expectedScore;
+        public PlayerScore(int player1Score, int player2Score, String expectedScore) {
+            this.player1Score = player1Score;
+            this.player2Score = player2Score;
+            this.expectedScore = expectedScore;
+        }
+
     }
-    
-    @Parameters
+
+
     public static Collection<Object[]> getAllScores() {
         return Arrays.asList(new Object[][] {
                 { 0, 0, "Love-All" },
@@ -68,33 +67,36 @@ public class TennisTest {
         });
     }
 
-    public void checkAllScores(TennisGame game) {
-        int highestScore = Math.max(this.player1Score, this.player2Score);
+    public void checkAllScores(TennisGame game, PlayerScore playerScore) {
+        int highestScore = Math.max(playerScore.player1Score, playerScore.player2Score);
         for (int i = 0; i < highestScore; i++) {
-            if (i < this.player1Score)
+            if (i < playerScore.player1Score)
                 game.wonPoint("player1");
-            if (i < this.player2Score)
+            if (i < playerScore.player2Score)
                 game.wonPoint("player2");
         }
-        assertEquals(this.expectedScore, game.getScore());
+        Assertions.assertEquals(playerScore.expectedScore, game.getScore());
     }
 
-    @Test
-    public void checkAllScoresTennisGame1() {
+    @ParameterizedTest
+    @MethodSource("getAllScores")
+    public void checkAllScoresTennisGame1(int player1Score, int player2Score, String expectedScore) {
         TennisGame1 game = new TennisGame1("player1", "player2");
-        checkAllScores(game);
+        checkAllScores(game, new PlayerScore(player1Score, player2Score, expectedScore));
     }
 
-    @Test
-    public void checkAllScoresTennisGame2() {
+    @ParameterizedTest
+    @MethodSource("getAllScores")
+    public void checkAllScoresTennisGame2(int player1Score, int player2Score, String expectedScore) {
         TennisGame2 game = new TennisGame2("player1", "player2");
-        checkAllScores(game);
+        checkAllScores(game, new PlayerScore(player1Score, player2Score, expectedScore));
     }
 
-    @Test
-    public void checkAllScoresTennisGame3() {
+    @ParameterizedTest
+    @MethodSource("getAllScores")
+    public void checkAllScoresTennisGame3(int player1Score, int player2Score, String expectedScore) {
         TennisGame3 game = new TennisGame3("player1", "player2");
-        checkAllScores(game);
+        checkAllScores(game, new PlayerScore(player1Score, player2Score, expectedScore));
     }
 
 }
