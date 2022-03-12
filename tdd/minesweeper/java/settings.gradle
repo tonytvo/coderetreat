@@ -9,6 +9,13 @@
  * in the user guide at https://docs.gradle.org/2.6/userguide/multi_project_builds.html
  */
 
-include 'java'
+// To declare projects as part of a multi-project build use the 'include' method
 
-rootProject.name = 'minesweeper'
+
+include 'java'
+/*
+include 'api'
+include 'services:webservice'
+*/
+
+rootProject.name = 'glidedrose'

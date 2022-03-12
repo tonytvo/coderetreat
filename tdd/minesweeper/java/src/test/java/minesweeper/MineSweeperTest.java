@@ -1,7 +1,8 @@
 package minesweeper;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Created by Tony on 1/15/2016.
@@ -23,6 +24,6 @@ public class MineSweeperTest {
 
     @Test
     public void sampleTest() throws Exception {
-        Assert.assertTrue("First dummy test", false);
+        assertTrue(false, "First dummy test");
     }
 }
