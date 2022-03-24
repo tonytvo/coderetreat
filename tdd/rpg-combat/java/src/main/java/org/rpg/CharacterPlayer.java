@@ -4,10 +4,12 @@ public class CharacterPlayer {
 
     public static final int MAX_HEALTH = 1000;
     public static final int INITIAL_LEVEL = 1;
+    private final int level;
     private int health;
 
-    public CharacterPlayer() {
+    public CharacterPlayer(int initialLevel) {
         health = MAX_HEALTH;
+        level = initialLevel;
     }
 
     public int health() {
@@ -19,7 +21,7 @@ public class CharacterPlayer {
     }
 
     public int level() {
-        return INITIAL_LEVEL;
+        return level;
     }
 
     public void heal(int healing) {
@@ -34,7 +36,20 @@ public class CharacterPlayer {
     }
 
     public void attack(int damage, CharacterPlayer attackedCharacter) {
-        attackedCharacter.receiveDamage(damage);
+        int calculatedDamange = reduceDamageByHalfIfAttackedCharacterIs5LevelHigher(damage, attackedCharacter);
+        attackedCharacter.receiveDamage(calculatedDamange);
+    }
+
+    private int reduceDamageByHalfIfAttackedCharacterIs5LevelHigher(int damage, CharacterPlayer attackedCharacter) {
+        if (is5LevelLowerThan(attackedCharacter)) {
+            return damage / 2;
+        } else {
+            return damage;
+        }
+    }
+
+    private boolean is5LevelLowerThan(CharacterPlayer attackedCharacter) {
+        return this.level <= attackedCharacter.level() - 5;
     }
 
     private void receiveDamage(int damage) {

@@ -13,7 +13,7 @@ public class CharacterPlayerTest {
 
     @BeforeEach
     void setUp() {
-        character = new CharacterPlayer();
+        character = new CharacterPlayer(INITIAL_LEVEL);
     }
 
     @Test
@@ -35,28 +35,28 @@ public class CharacterPlayerTest {
     public void loses_health_when_receiving_damage() {
         int currentHealth = character.health();
 
-        new CharacterPlayer().attack(1, character);
+        new CharacterPlayer(INITIAL_LEVEL).attack(1, character);
 
         assertThat(character.health()).isEqualTo(currentHealth-1);
     }
 
     @Test
     public void when_damage_received_exceeds_current_health_health_becomes_zero() {
-        new CharacterPlayer().attack(DAMAGE_EXCEEDING_HEALTH, character);
+        new CharacterPlayer(INITIAL_LEVEL).attack(DAMAGE_EXCEEDING_HEALTH, character);
 
         assertThat(character.health()).isEqualTo(0);
     }
 
     @Test
     public void when_when_health_becomes_zero_character_dies() {
-        new CharacterPlayer().attack(DAMAGE_EXCEEDING_HEALTH, character);
+        new CharacterPlayer(INITIAL_LEVEL).attack(DAMAGE_EXCEEDING_HEALTH, character);
 
         assertThat(character.isAlive()).isEqualTo(false);
     }
 
     @Test
     public void character_can_be_healed() {
-        new CharacterPlayer().attack(2, character);
+        new CharacterPlayer(INITIAL_LEVEL).attack(2, character);
         int previousHealth = character.health();
 
         character.heal(1);
@@ -66,7 +66,7 @@ public class CharacterPlayerTest {
 
     @Test
     public void healing_cannot_raise_health_above_max_health() {
-        new CharacterPlayer().attack(1, character);
+        new CharacterPlayer(INITIAL_LEVEL).attack(1, character);
 
         character.heal(2);
 
@@ -75,10 +75,20 @@ public class CharacterPlayerTest {
 
     @Test
     public void dead_character_can_not_be_healed() {
-        new CharacterPlayer().attack(DAMAGE_EXCEEDING_HEALTH, character);
+        new CharacterPlayer(INITIAL_LEVEL).attack(DAMAGE_EXCEEDING_HEALTH, character);
 
         character.heal(2);
 
         assertThat(character.isAlive()).isEqualTo(false);
+    }
+
+    @Test
+    public void damage_is_reduced_by_50_percent_when_target_level_is_at_least_five_levels_above_attacker() {
+        CharacterPlayer attackingCharacter = new CharacterPlayer(1);
+        CharacterPlayer attackedCharacter = new CharacterPlayer(6);
+
+        attackingCharacter.attack(2, attackedCharacter);
+
+        assertThat(attackedCharacter.health()).isEqualTo(CharacterPlayer.MAX_HEALTH - 1);
     }
 }
