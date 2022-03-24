@@ -38,4 +38,11 @@ public class CharacterPlayerTest {
 
         assertThat(character.health()).isEqualTo(0);
     }
+
+    @Test
+    public void when_when_health_becomes_zero_character_dies() {
+        character.receiveDamage(DAMAGE_EXCEEDING_HEALTH);
+
+        assertThat(character.isAlive()).isEqualTo(false);
+    }
 }

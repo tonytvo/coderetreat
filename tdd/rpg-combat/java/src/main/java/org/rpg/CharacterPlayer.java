@@ -19,4 +19,8 @@ public class CharacterPlayer {
             health = 0;
         }
     }
+
+    public boolean isAlive() {
+        return health > 0;
+    }
 }
