@@ -117,7 +117,14 @@ public class CharacterPlayerTest {
         assertThat(meleeFighter.maxRange()).isEqualTo(2);
     }
 
-    private class MeleeFighter extends CharacterPlayer {
+    @Test
+    public void a_ranged_fighter_has_an_attack_max_range_of_20() {
+        CharacterPlayer rangedFighter = new RangedFighter(1);
+
+        assertThat(rangedFighter.maxRange()).isEqualTo(20);
+    }
+
+    private static class MeleeFighter extends CharacterPlayer {
         public MeleeFighter(int initialLevel) {
             super(initialLevel);
         }
@@ -125,6 +132,17 @@ public class CharacterPlayerTest {
         @Override
         public int maxRange() {
             return 2;
+        }
+    }
+
+    private static class RangedFighter extends CharacterPlayer {
+        public RangedFighter(int initialLevel) {
+            super(initialLevel);
+        }
+
+        @Override
+        public int maxRange() {
+            return 20;
         }
     }
 }
