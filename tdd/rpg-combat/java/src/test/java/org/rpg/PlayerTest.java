@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.rpg.Player.*;
@@ -160,7 +161,7 @@ public class PlayerTest {
 
     @Test
     public void character_can_join_factions() {
-        List<Faction> factions = Arrays.asList(Faction.DEVELOPERS, Faction.SYSOPS);
+        Set<Faction> factions = Set.of(Faction.DEVELOPERS, Faction.SYSOPS);
 
         target.join(Faction.DEVELOPERS);
         target.join(Faction.SYSOPS);
@@ -170,7 +171,7 @@ public class PlayerTest {
 
     @Test
     public void newly_create_character_does_not_belong_to_any_faction() {
-        assertThat(target.factionsJoined()).isEqualTo(Collections.emptyList());
+        assertThat(target.factionsJoined()).isEqualTo(Collections.emptySet());
     }
 
     @Test
@@ -180,6 +181,15 @@ public class PlayerTest {
 
         target.leave(Faction.DEVELOPERS);
 
-        assertThat(target.factionsJoined()).isEqualTo(List.of(Faction.SYSOPS));
+        assertThat(target.factionsJoined()).isEqualTo(Set.of(Faction.SYSOPS));
+    }
+
+    @Test
+    public void character_can_not_join_the_same_faction_twice() {
+        target.join(Faction.DEVELOPERS);
+        target.join(Faction.SYSOPS);
+        target.join(Faction.DEVELOPERS);
+
+        assertThat(target.factionsJoined()).isEqualTo(Set.of(Faction.SYSOPS, Faction.DEVELOPERS));
     }
 }

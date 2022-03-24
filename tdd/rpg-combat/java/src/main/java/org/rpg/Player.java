@@ -1,7 +1,6 @@
 package org.rpg;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Player {
 
@@ -13,14 +12,14 @@ public class Player {
     private final DistanceCalculator distanceCalculator;
     private final Coord position;
     private int health;
-    private List<Faction> factionsJoined;
+    private Set<Faction> factionsJoined;
 
     public Player(int initialLevel, DistanceCalculator distanceCalculator) {
         health = MAX_HEALTH;
         level = initialLevel;
         this.distanceCalculator = distanceCalculator;
         position = new Coord();
-        factionsJoined = new ArrayList<>();
+        factionsJoined = new HashSet<>();
     }
 
     public int health() {
@@ -94,7 +93,7 @@ public class Player {
         factionsJoined.add(factionToJoin);
     }
 
-    public List<Faction> factionsJoined() {
+    public Collection<Faction> factionsJoined() {
         return factionsJoined;
     }
 
