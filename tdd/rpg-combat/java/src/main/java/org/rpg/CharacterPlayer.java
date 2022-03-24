@@ -41,14 +41,18 @@ public class CharacterPlayer {
     }
 
     private int reduceDamageByHalfIfAttackedCharacterIs5LevelHigher(int damage, CharacterPlayer attackedCharacter) {
-        if (is5LevelLowerThan(attackedCharacter)) {
-            return damage / 2;
+        if (shouldReduceDamangeForCharacter(attackedCharacter)) {
+            return halfOf(damage);
         } else {
             return damage;
         }
     }
 
-    private boolean is5LevelLowerThan(CharacterPlayer attackedCharacter) {
+    private int halfOf(int damage) {
+        return damage / 2;
+    }
+
+    private boolean shouldReduceDamangeForCharacter(CharacterPlayer attackedCharacter) {
         return this.level <= attackedCharacter.level() - 5;
     }
 
