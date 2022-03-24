@@ -14,4 +14,14 @@ public class CharacterPlayerTest {
         assertThat(characterPlayer.health()).isEqualTo(INITIAL_HEALTH);
     }
 
+    @Test
+    public void loses_health_when_receiving_damage() {
+        CharacterPlayer character = new CharacterPlayer();
+
+        int currentHealth = character.health();
+
+        character.receiveDamage(1);
+
+        assertThat(character.health()).isEqualTo(currentHealth-1);
+    }
 }
