@@ -16,8 +16,13 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        target = new Player(INITIAL_LEVEL, inRangeDistanceCalculator);
-        attacker = new Player(INITIAL_LEVEL, inRangeDistanceCalculator);
+        target = new org.rpg.PlayerBuilder()
+                .setInitialLevel(INITIAL_LEVEL)
+                .createPlayer();
+        new PlayerBuilder();
+        attacker = new org.rpg.PlayerBuilder()
+                .setInitialLevel(INITIAL_LEVEL)
+                .createPlayer();
     }
 
     @Test
@@ -88,8 +93,9 @@ public class PlayerTest {
 
     @Test
     public void damage_is_reduced_by_50_percent_when_target_level_is_at_least_five_levels_above_attacker() {
-        attacker = new Player(1, inRangeDistanceCalculator);
-        target = new Player(6, inRangeDistanceCalculator);
+        attacker = new org.rpg.PlayerBuilder().setInitialLevel(1).setDistanceCalculator(inRangeDistanceCalculator).createPlayer();
+        new PlayerBuilder();
+        target = new org.rpg.PlayerBuilder().setInitialLevel(6).setDistanceCalculator(inRangeDistanceCalculator).createPlayer();
 
         attacker.attack(2, target);
 
@@ -98,9 +104,12 @@ public class PlayerTest {
 
     @Test
     public void damage_is_increased_by_50_percent_when_attacker_level_is_at_least_five_levels_above_target() {
-        target = new Player(1, inRangeDistanceCalculator);
-
-        attacker = new Player(1 + 5, inRangeDistanceCalculator);
+        target = new org.rpg.PlayerBuilder()
+                .setInitialLevel(1)
+                .createPlayer();
+        attacker = new org.rpg.PlayerBuilder()
+                .setInitialLevel(1 + 5)
+                .createPlayer();
         attacker.attack(2, target);
 
         assertThat(target.health()).isEqualTo(Player.MAX_HEALTH - 3);
@@ -113,26 +122,35 @@ public class PlayerTest {
 
     @Test
     public void a_melee_fighter_has_an_attack_range_of_2() {
-        Player meleeFighter = new MeleeFighter(1);
+        Player meleeFighter = new PlayerBuilder()
+                .forMeleeFighter()
+                .createPlayer();
 
         assertThat(meleeFighter.maxRange()).isEqualTo(2);
     }
 
     @Test
     public void a_ranged_fighter_has_an_attack_max_range_of_20() {
-        Player rangedFighter = new RangedFighter(1, inRangeDistanceCalculator);
+        Player rangedFighter = new PlayerBuilder()
+                .forRangedFighter()
+                .createPlayer();
 
         assertThat(rangedFighter.maxRange()).isEqualTo(20);
     }
 
     @Test
     public void cannot_attack_when_enemy_is_out_of_range() {
-        Player john = new RangedFighter(1, outOfRangeDistanceCalculator);
-        Player louis = new RangedFighter(1, inRangeDistanceCalculator);
-        john.position = Coord.of(0);
-        louis.position = Coord.of(22);
+        Player john = new PlayerBuilder()
+                .setDistanceCalculator(outOfRangeDistanceCalculator)
+                .forRangedFighter()
+                .createPlayer();
+        Player louis = new PlayerBuilder()
+                .setDistanceCalculator(inRangeDistanceCalculator)
+                .forRangedFighter()
+                .createPlayer();
 
         john.attack(2, louis);
+
         assertThat(louis.health()).isEqualTo(MAX_HEALTH);
     }
 }

@@ -8,13 +8,14 @@ public class Player {
 
     private final int level;
     private final DistanceCalculator distanceCalculator;
-    public Coord position;
+    private final Coord position;
     private int health;
 
     public Player(int initialLevel, DistanceCalculator distanceCalculator) {
         health = MAX_HEALTH;
         level = initialLevel;
         this.distanceCalculator = distanceCalculator;
+        position = new Coord();
     }
 
     public int health() {
