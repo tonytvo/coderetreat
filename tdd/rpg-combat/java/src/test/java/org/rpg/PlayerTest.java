@@ -172,4 +172,14 @@ public class PlayerTest {
     public void newly_create_character_does_not_belong_to_any_faction() {
         assertThat(target.factionsJoined()).isEqualTo(Collections.emptyList());
     }
+
+    @Test
+    public void character_can_leave_a_faction() {
+        target.join(Faction.DEVELOPERS);
+        target.join(Faction.SYSOPS);
+
+        target.leave(Faction.DEVELOPERS);
+
+        assertThat(target.factionsJoined()).isEqualTo(List.of(Faction.SYSOPS));
+    }
 }

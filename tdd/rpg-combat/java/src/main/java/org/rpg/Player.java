@@ -97,4 +97,8 @@ public class Player {
     public List<Faction> factionsJoined() {
         return factionsJoined;
     }
+
+    public void leave(Faction factionToLeave) {
+        factionsJoined.remove(factionToLeave);
+    }
 }
