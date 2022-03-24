@@ -1,5 +1,7 @@
 package org.rpg;
 
+import com.google.common.collect.Sets;
+
 import java.util.*;
 
 public class Player {
@@ -99,5 +101,10 @@ public class Player {
 
     public void leave(Faction factionToLeave) {
         factionsJoined.remove(factionToLeave);
+    }
+
+    public boolean isAlliedWith(Player anotherPlayer) {
+        Sets.SetView<Faction> intersection = Sets.intersection(factionsJoined, Set.copyOf(anotherPlayer.factionsJoined()));
+        return !intersection.isEmpty();
     }
 }

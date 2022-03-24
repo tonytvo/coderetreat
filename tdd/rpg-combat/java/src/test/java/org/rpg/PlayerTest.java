@@ -192,4 +192,15 @@ public class PlayerTest {
 
         assertThat(target.factionsJoined()).isEqualTo(Set.of(Faction.SYSOPS, Faction.DEVELOPERS));
     }
+
+    @Test
+    public void character_is_allied_with_another_character_if_they_belong_to_the_same_faction() {
+        target.join(Faction.DEVELOPERS);
+        target.join(Faction.SYSOPS);
+
+        Player meleeFighter = new PlayerBuilder().forMeleeFighter().createPlayer();
+        meleeFighter.join(Faction.DEVELOPERS);
+
+        assertThat(target.isAlliedWith(meleeFighter)).isEqualTo(true);
+    }
 }
