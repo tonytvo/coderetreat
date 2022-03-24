@@ -35,28 +35,28 @@ public class CharacterPlayerTest {
     public void loses_health_when_receiving_damage() {
         int currentHealth = character.health();
 
-        character.receiveDamage(1);
+        new CharacterPlayer().attack(1, character);
 
         assertThat(character.health()).isEqualTo(currentHealth-1);
     }
 
     @Test
     public void when_damage_received_exceeds_current_health_health_becomes_zero() {
-        character.receiveDamage(DAMAGE_EXCEEDING_HEALTH);
+        new CharacterPlayer().attack(DAMAGE_EXCEEDING_HEALTH, character);
 
         assertThat(character.health()).isEqualTo(0);
     }
 
     @Test
     public void when_when_health_becomes_zero_character_dies() {
-        character.receiveDamage(DAMAGE_EXCEEDING_HEALTH);
+        new CharacterPlayer().attack(DAMAGE_EXCEEDING_HEALTH, character);
 
         assertThat(character.isAlive()).isEqualTo(false);
     }
 
     @Test
     public void character_can_be_healed() {
-        character.receiveDamage(2);
+        new CharacterPlayer().attack(2, character);
         int previousHealth = character.health();
 
         character.heal(1);
@@ -66,7 +66,7 @@ public class CharacterPlayerTest {
 
     @Test
     public void healing_cannot_raise_health_above_max_health() {
-        character.receiveDamage(1);
+        new CharacterPlayer().attack(1, character);
 
         character.heal(2);
 
@@ -75,7 +75,7 @@ public class CharacterPlayerTest {
 
     @Test
     public void dead_character_can_not_be_healed() {
-        character.receiveDamage(DAMAGE_EXCEEDING_HEALTH);
+        new CharacterPlayer().attack(DAMAGE_EXCEEDING_HEALTH, character);
 
         character.heal(2);
 

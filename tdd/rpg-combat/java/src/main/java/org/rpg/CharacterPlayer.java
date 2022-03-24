@@ -14,13 +14,6 @@ public class CharacterPlayer {
         return health;
     }
 
-    public void receiveDamage(int damage) {
-        health -= damage;
-        if (health < 0) {
-            health = 0;
-        }
-    }
-
     public boolean isAlive() {
         return health > 0;
     }
@@ -37,6 +30,17 @@ public class CharacterPlayer {
         health += healing;
         if (health > MAX_HEALTH) {
             health = MAX_HEALTH;
+        }
+    }
+
+    public void attack(int damage, CharacterPlayer attackedCharacter) {
+        attackedCharacter.receiveDamage(damage);
+    }
+
+    private void receiveDamage(int damage) {
+        health -= damage;
+        if (health < 0) {
+            health = 0;
         }
     }
 }
