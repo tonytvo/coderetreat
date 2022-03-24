@@ -4,25 +4,25 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.rpg.CharacterPlayer.*;
+import static org.rpg.Player.*;
 
-public class CharacterPlayerTest {
-    private static final int DAMAGE_EXCEEDING_HEALTH = CharacterPlayer.MAX_HEALTH + 1;
+public class PlayerTest {
+    private static final int DAMAGE_EXCEEDING_HEALTH = Player.MAX_HEALTH + 1;
     private final DistanceCalculator inRangeDistanceCalculator = (coord1, coord2, allowedRange) -> true;
     private final DistanceCalculator outOfRangeDistanceCalculator = (coord1, coord2, allowedRange) -> false;
 
-    private CharacterPlayer target;
-    private CharacterPlayer attacker;
+    private Player target;
+    private Player attacker;
 
     @BeforeEach
     void setUp() {
-        target = new CharacterPlayer(INITIAL_LEVEL, inRangeDistanceCalculator);
-        attacker = new CharacterPlayer(INITIAL_LEVEL, inRangeDistanceCalculator);
+        target = new Player(INITIAL_LEVEL, inRangeDistanceCalculator);
+        attacker = new Player(INITIAL_LEVEL, inRangeDistanceCalculator);
     }
 
     @Test
     public void has_health_at_1000_when_created() {
-        assertThat(target.health()).isEqualTo(CharacterPlayer.MAX_HEALTH);
+        assertThat(target.health()).isEqualTo(Player.MAX_HEALTH);
     }
 
     @Test
@@ -74,7 +74,7 @@ public class CharacterPlayerTest {
 
         target.heal(2);
 
-        assertThat(target.health()).isEqualTo(CharacterPlayer.MAX_HEALTH);
+        assertThat(target.health()).isEqualTo(Player.MAX_HEALTH);
     }
 
     @Test
@@ -88,22 +88,22 @@ public class CharacterPlayerTest {
 
     @Test
     public void damage_is_reduced_by_50_percent_when_target_level_is_at_least_five_levels_above_attacker() {
-        attacker = new CharacterPlayer(1, inRangeDistanceCalculator);
-        target = new CharacterPlayer(6, inRangeDistanceCalculator);
+        attacker = new Player(1, inRangeDistanceCalculator);
+        target = new Player(6, inRangeDistanceCalculator);
 
         attacker.attack(2, target);
 
-        assertThat(target.health()).isEqualTo(CharacterPlayer.MAX_HEALTH - 1);
+        assertThat(target.health()).isEqualTo(Player.MAX_HEALTH - 1);
     }
 
     @Test
     public void damage_is_increased_by_50_percent_when_attacker_level_is_at_least_five_levels_above_target() {
-        target = new CharacterPlayer(1, inRangeDistanceCalculator);
+        target = new Player(1, inRangeDistanceCalculator);
 
-        attacker = new CharacterPlayer(1 + 5, inRangeDistanceCalculator);
+        attacker = new Player(1 + 5, inRangeDistanceCalculator);
         attacker.attack(2, target);
 
-        assertThat(target.health()).isEqualTo(CharacterPlayer.MAX_HEALTH - 3);
+        assertThat(target.health()).isEqualTo(Player.MAX_HEALTH - 3);
     }
 
     @Test
@@ -113,22 +113,22 @@ public class CharacterPlayerTest {
 
     @Test
     public void a_melee_fighter_has_an_attack_range_of_2() {
-        CharacterPlayer meleeFighter = new MeleeFighter(1);
+        Player meleeFighter = new MeleeFighter(1);
 
         assertThat(meleeFighter.maxRange()).isEqualTo(2);
     }
 
     @Test
     public void a_ranged_fighter_has_an_attack_max_range_of_20() {
-        CharacterPlayer rangedFighter = new RangedFighter(1, inRangeDistanceCalculator);
+        Player rangedFighter = new RangedFighter(1, inRangeDistanceCalculator);
 
         assertThat(rangedFighter.maxRange()).isEqualTo(20);
     }
 
     @Test
     public void cannot_attack_when_enemy_is_out_of_range() {
-        CharacterPlayer john = new RangedFighter(1, outOfRangeDistanceCalculator);
-        CharacterPlayer louis = new RangedFighter(1, inRangeDistanceCalculator);
+        Player john = new RangedFighter(1, outOfRangeDistanceCalculator);
+        Player louis = new RangedFighter(1, inRangeDistanceCalculator);
         john.position = Coord.of(0);
         louis.position = Coord.of(22);
 

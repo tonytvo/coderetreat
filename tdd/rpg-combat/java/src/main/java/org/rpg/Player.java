@@ -1,6 +1,6 @@
 package org.rpg;
 
-public class CharacterPlayer {
+public class Player {
 
     public static final int MAX_HEALTH = 1000;
     public static final int INITIAL_LEVEL = 1;
@@ -11,7 +11,7 @@ public class CharacterPlayer {
     public Coord position;
     private int health;
 
-    public CharacterPlayer(int initialLevel, DistanceCalculator distanceCalculator) {
+    public Player(int initialLevel, DistanceCalculator distanceCalculator) {
         health = MAX_HEALTH;
         level = initialLevel;
         this.distanceCalculator = distanceCalculator;
@@ -40,7 +40,7 @@ public class CharacterPlayer {
         }
     }
 
-    public void attack(int damage, CharacterPlayer attackedCharacter) {
+    public void attack(int damage, Player attackedCharacter) {
         if (!distanceCalculator.isWithinRange(this.position, attackedCharacter.position, maxRange())) {
             return;
         }
@@ -49,7 +49,7 @@ public class CharacterPlayer {
         attackedCharacter.receiveDamage(calculatedDamange);
     }
 
-    private int reduceDamageByHalfIfAttackedCharacterIs5LevelHigher(int damage, CharacterPlayer attackedCharacter) {
+    private int reduceDamageByHalfIfAttackedCharacterIs5LevelHigher(int damage, Player attackedCharacter) {
         if (shouldReduceDamangeForCharacter(attackedCharacter)) {
             return halfOf(damage);
         }
@@ -65,11 +65,11 @@ public class CharacterPlayer {
         return damage / 2;
     }
 
-    private boolean shouldReduceDamangeForCharacter(CharacterPlayer attackedCharacter) {
+    private boolean shouldReduceDamangeForCharacter(Player attackedCharacter) {
         return this.level <= attackedCharacter.level() - 5;
     }
 
-    private boolean shouldIncreaseDamageForCharacter(CharacterPlayer attackedCharacter) {
+    private boolean shouldIncreaseDamageForCharacter(Player attackedCharacter) {
         return this.level >= attackedCharacter.level() + 5;
     }
 

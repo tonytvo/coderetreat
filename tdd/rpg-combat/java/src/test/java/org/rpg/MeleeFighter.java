@@ -1,6 +1,6 @@
 package org.rpg;
 
-class MeleeFighter extends CharacterPlayer {
+class MeleeFighter extends Player {
     public MeleeFighter(int initialLevel) {
         super(initialLevel, (coord1, coord2, allowedRange) -> true);
     }

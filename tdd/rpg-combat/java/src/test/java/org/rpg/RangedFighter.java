@@ -1,6 +1,6 @@
 package org.rpg;
 
-class RangedFighter extends CharacterPlayer {
+class RangedFighter extends Player {
     public RangedFighter(int initialLevel, DistanceCalculator distanceCalculator) {
         super(initialLevel, distanceCalculator);
     }
