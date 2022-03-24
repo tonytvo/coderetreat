@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -167,4 +168,8 @@ public class PlayerTest {
         assertThat(target.factionsJoined()).isEqualTo(factions);
     }
 
+    @Test
+    public void newly_create_character_does_not_belong_to_any_faction() {
+        assertThat(target.factionsJoined()).isEqualTo(Collections.emptyList());
+    }
 }
