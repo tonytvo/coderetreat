@@ -7,11 +7,14 @@ public class CharacterPlayer {
     public static final int MAX_RANGE = 1;
 
     private final int level;
+    private final DistanceCalculator distanceCalculator;
+    public Coord position;
     private int health;
 
-    public CharacterPlayer(int initialLevel) {
+    public CharacterPlayer(int initialLevel, DistanceCalculator distanceCalculator) {
         health = MAX_HEALTH;
         level = initialLevel;
+        this.distanceCalculator = distanceCalculator;
     }
 
     public int health() {
@@ -38,6 +41,10 @@ public class CharacterPlayer {
     }
 
     public void attack(int damage, CharacterPlayer attackedCharacter) {
+        if (!distanceCalculator.isWithinRange(this.position, attackedCharacter.position, maxRange())) {
+            return;
+        }
+
         int calculatedDamange = reduceDamageByHalfIfAttackedCharacterIs5LevelHigher(damage, attackedCharacter);
         attackedCharacter.receiveDamage(calculatedDamange);
     }

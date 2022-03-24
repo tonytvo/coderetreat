@@ -1,8 +1,8 @@
 package org.rpg;
 
 class RangedFighter extends CharacterPlayer {
-    public RangedFighter(int initialLevel) {
-        super(initialLevel);
+    public RangedFighter(int initialLevel, DistanceCalculator distanceCalculator) {
+        super(initialLevel, distanceCalculator);
     }
 
     @Override
