@@ -43,12 +43,13 @@ public class CharacterPlayer {
     private int reduceDamageByHalfIfAttackedCharacterIs5LevelHigher(int damage, CharacterPlayer attackedCharacter) {
         if (shouldReduceDamangeForCharacter(attackedCharacter)) {
             return halfOf(damage);
-        } else if (shouldIncreaseDamageForCharacter(attackedCharacter)) {
+        }
+
+        if (shouldIncreaseDamageForCharacter(attackedCharacter)) {
             return Math.toIntExact(Math.round(damage * 1.5));
         }
-        else {
-            return damage;
-        }
+
+        return damage;
     }
 
     private int halfOf(int damage) {
