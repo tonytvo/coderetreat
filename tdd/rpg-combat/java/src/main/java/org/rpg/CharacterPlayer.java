@@ -28,4 +28,8 @@ public class CharacterPlayer {
     public int level() {
         return INITIAL_LEVEL;
     }
+
+    public void heal(int healing) {
+        health += healing;
+    }
 }

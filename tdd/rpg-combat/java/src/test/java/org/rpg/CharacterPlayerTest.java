@@ -54,4 +54,14 @@ public class CharacterPlayerTest {
 
         assertThat(character.isAlive()).isEqualTo(false);
     }
+
+    @Test
+    public void character_can_be_healed() {
+        character.receiveDamage(2);
+        int previousHealth = character.health();
+
+        character.heal(1);
+
+        assertThat(character.health()).isEqualTo(previousHealth+1);
+    }
 }
