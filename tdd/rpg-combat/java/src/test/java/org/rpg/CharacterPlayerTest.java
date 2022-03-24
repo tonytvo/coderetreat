@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.rpg.CharacterPlayer.INITIAL_HEALTH;
+import static org.rpg.CharacterPlayer.INITIAL_LEVEL;
 
 public class CharacterPlayerTest {
     private static final int DAMAGE_EXCEEDING_HEALTH = CharacterPlayer.INITIAL_HEALTH + 1;
@@ -21,6 +22,13 @@ public class CharacterPlayerTest {
         CharacterPlayer characterPlayer = new CharacterPlayer();
 
         assertThat(characterPlayer.health()).isEqualTo(INITIAL_HEALTH);
+    }
+
+    @Test
+    public void has_level_at_1_when_created() {
+        CharacterPlayer characterPlayer = new CharacterPlayer();
+
+        assertThat(characterPlayer.level()).isEqualTo(INITIAL_LEVEL);
     }
 
     @Test
