@@ -81,16 +81,12 @@ This is a fun kata that has the programmer building simple combat rules, as for 
 - What have you learned? Any new technique or pattern?
 - Share your design with others, and get feedback on different approaches.
 
-# Resources #
+# Resources
 
 - Original Source: http://www.slideshare.net/DanielOjedaLoisel/rpg-combat-kata
 - https://github.com/eparlato/rpg-combat-kata
 - https://www.geepawhill.org/series/many-much-more-smaller-steps/
 - https://sammancoaching.org/learning_hours/small_steps/smaller_steps.html
-- 
------
-
-All you need to build this project is Java 11+ or later, Gradle.
 
 Testing
 -------
