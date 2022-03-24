@@ -4,6 +4,8 @@ public class CharacterPlayer {
 
     public static final int MAX_HEALTH = 1000;
     public static final int INITIAL_LEVEL = 1;
+    public static final int MAX_RANGE = 1;
+
     private final int level;
     private int health;
 
@@ -69,5 +71,9 @@ public class CharacterPlayer {
         if (health < 0) {
             health = 0;
         }
+    }
+
+    public int maxRange() {
+        return MAX_RANGE;
     }
 }

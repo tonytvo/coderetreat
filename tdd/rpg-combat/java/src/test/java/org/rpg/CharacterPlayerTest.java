@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.rpg.CharacterPlayer.INITIAL_LEVEL;
+import static org.rpg.CharacterPlayer.MAX_RANGE;
 
 public class CharacterPlayerTest {
     private static final int DAMAGE_EXCEEDING_HEALTH = CharacterPlayer.MAX_HEALTH + 1;
@@ -102,5 +103,10 @@ public class CharacterPlayerTest {
         attacker.attack(2, target);
 
         assertThat(target.health()).isEqualTo(CharacterPlayer.MAX_HEALTH - 3);
+    }
+
+    @Test
+    public void character_has_an_attack_max_range() {
+        assertThat(target.maxRange()).isEqualTo(MAX_RANGE);
     }
 }
