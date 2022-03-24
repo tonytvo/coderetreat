@@ -2,12 +2,12 @@ package org.rpg;
 
 public class CharacterPlayer {
 
-    public static final int INITIAL_HEALTH = 1000;
+    public static final int MAX_HEALTH = 1000;
     public static final int INITIAL_LEVEL = 1;
     private int health;
 
     public CharacterPlayer() {
-        health = INITIAL_HEALTH;
+        health = MAX_HEALTH;
     }
 
     public int health() {
@@ -31,5 +31,8 @@ public class CharacterPlayer {
 
     public void heal(int healing) {
         health += healing;
+        if (health > MAX_HEALTH) {
+            health = MAX_HEALTH;
+        }
     }
 }
