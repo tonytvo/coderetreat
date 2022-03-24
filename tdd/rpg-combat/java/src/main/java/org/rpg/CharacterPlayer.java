@@ -30,6 +30,10 @@ public class CharacterPlayer {
     }
 
     public void heal(int healing) {
+        if (!isAlive()) {
+            return;
+        }
+
         health += healing;
         if (health > MAX_HEALTH) {
             health = MAX_HEALTH;

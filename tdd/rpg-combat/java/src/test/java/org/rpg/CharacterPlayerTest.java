@@ -72,4 +72,13 @@ public class CharacterPlayerTest {
 
         assertThat(character.health()).isEqualTo(CharacterPlayer.MAX_HEALTH);
     }
+
+    @Test
+    public void dead_character_can_not_be_healed() {
+        character.receiveDamage(DAMAGE_EXCEEDING_HEALTH);
+
+        character.heal(2);
+
+        assertThat(character.isAlive()).isEqualTo(false);
+    }
 }
