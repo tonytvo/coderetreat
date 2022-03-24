@@ -56,6 +56,27 @@ public class Player {
         attackedCharacter.receiveDamage(calculatedDamange);
     }
 
+    public int maxRange() {
+        return MAX_RANGE;
+    }
+
+    public void join(Faction factionToJoin) {
+        factionsJoined.add(factionToJoin);
+    }
+
+    public Collection<Faction> factionsJoined() {
+        return factionsJoined;
+    }
+
+    public void leave(Faction factionToLeave) {
+        factionsJoined.remove(factionToLeave);
+    }
+
+    public boolean isAlliedWith(Player anotherPlayer) {
+        Sets.SetView<Faction> intersection = Sets.intersection(factionsJoined, Set.copyOf(anotherPlayer.factionsJoined()));
+        return !intersection.isEmpty();
+    }
+
     private int reduceDamageByHalfIfAttackedCharacterIs5LevelHigher(int damage, Player attackedCharacter) {
         if (shouldReduceDamangeForCharacter(attackedCharacter)) {
             return halfOf(damage);
@@ -85,26 +106,5 @@ public class Player {
         if (health < 0) {
             health = 0;
         }
-    }
-
-    public int maxRange() {
-        return MAX_RANGE;
-    }
-
-    public void join(Faction factionToJoin) {
-        factionsJoined.add(factionToJoin);
-    }
-
-    public Collection<Faction> factionsJoined() {
-        return factionsJoined;
-    }
-
-    public void leave(Faction factionToLeave) {
-        factionsJoined.remove(factionToLeave);
-    }
-
-    public boolean isAlliedWith(Player anotherPlayer) {
-        Sets.SetView<Faction> intersection = Sets.intersection(factionsJoined, Set.copyOf(anotherPlayer.factionsJoined()));
-        return !intersection.isEmpty();
     }
 }
