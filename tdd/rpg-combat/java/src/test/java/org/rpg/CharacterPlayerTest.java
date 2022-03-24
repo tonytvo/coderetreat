@@ -91,4 +91,14 @@ public class CharacterPlayerTest {
 
         assertThat(attackedCharacter.health()).isEqualTo(CharacterPlayer.MAX_HEALTH - 1);
     }
+
+    @Test
+    public void damage_is_increased_by_50_percent_when_attacker_level_is_at_least_five_levels_above_target() {
+        CharacterPlayer target = new CharacterPlayer(1);
+
+        CharacterPlayer attacker = new CharacterPlayer(1 + 5);
+        attacker.attack(2, target);
+
+        assertThat(target.health()).isEqualTo(CharacterPlayer.MAX_HEALTH - 3);
+    }
 }
