@@ -11,10 +11,10 @@ plugins {
     id 'java'
 }
 
-group 'org.tennis'
+group 'org.rpgcombat'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.10
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()

@@ -84,7 +84,10 @@ This is a fun kata that has the programmer building simple combat rules, as for 
 # Resources #
 
 - Original Source: http://www.slideshare.net/DanielOjedaLoisel/rpg-combat-kata
-Build
+- https://github.com/eparlato/rpg-combat-kata
+- https://www.geepawhill.org/series/many-much-more-smaller-steps/
+- https://sammancoaching.org/learning_hours/small_steps/smaller_steps.html
+- 
 -----
 
 All you need to build this project is Java 11+ or later, Gradle.
