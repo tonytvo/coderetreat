@@ -1,5 +1,8 @@
 package org.rpg;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
 
     public static final int MAX_HEALTH = 1000;
@@ -10,12 +13,14 @@ public class Player {
     private final DistanceCalculator distanceCalculator;
     private final Coord position;
     private int health;
+    private List<Faction> factionsJoined;
 
     public Player(int initialLevel, DistanceCalculator distanceCalculator) {
         health = MAX_HEALTH;
         level = initialLevel;
         this.distanceCalculator = distanceCalculator;
         position = new Coord();
+        factionsJoined = new ArrayList<>();
     }
 
     public int health() {
@@ -83,5 +88,13 @@ public class Player {
 
     public int maxRange() {
         return MAX_RANGE;
+    }
+
+    public void join(Faction factionToJoin) {
+        factionsJoined.add(factionToJoin);
+    }
+
+    public List<Faction> factionsJoined() {
+        return factionsJoined;
     }
 }

@@ -3,6 +3,9 @@ package org.rpg;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.rpg.Player.*;
 
@@ -153,4 +156,15 @@ public class PlayerTest {
 
         assertThat(louis.health()).isEqualTo(MAX_HEALTH);
     }
+
+    @Test
+    public void character_can_join_factions() {
+        List<Faction> factions = Arrays.asList(Faction.DEVELOPERS, Faction.SYSOPS);
+
+        target.join(Faction.DEVELOPERS);
+        target.join(Faction.SYSOPS);
+
+        assertThat(target.factionsJoined()).isEqualTo(factions);
+    }
+
 }
