@@ -19,16 +19,17 @@ public class CharacterPlayerTest {
 
     @Test
     public void has_health_at_1000_when_created() {
-        CharacterPlayer characterPlayer = new CharacterPlayer();
-
-        assertThat(characterPlayer.health()).isEqualTo(INITIAL_HEALTH);
+        assertThat(character.health()).isEqualTo(INITIAL_HEALTH);
     }
 
     @Test
     public void has_level_at_1_when_created() {
-        CharacterPlayer characterPlayer = new CharacterPlayer();
+        assertThat(character.level()).isEqualTo(INITIAL_LEVEL);
+    }
 
-        assertThat(characterPlayer.level()).isEqualTo(INITIAL_LEVEL);
+    @Test
+    public void character_is_alive_when_created() {
+        assertThat(character.isAlive()).isEqualTo(true);
     }
 
     @Test
