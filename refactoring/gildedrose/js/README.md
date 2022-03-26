@@ -51,3 +51,5 @@ npm run test:mocha
 - https://vimeo.com/122645679
 - https://www.stackbuilders.com/blog/refactoring-javascript-with-functional-patterns/
 - https://www.youtube.com/watch?v=wp6oSVDdbXQ&ab_channel=CraftHubEvents
+- https://blog.ninjaferret.co.uk/2015/06/05/Introducing-Functional-Calisthenics.html
+- https://www.codurance.com/publications/2017/10/12/functional-calisthenics
