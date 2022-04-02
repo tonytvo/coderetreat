@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gilded Rose should foo 1`] = `
+Object {
+  "foo": "{\\"name\\":\\"foo\\",\\"sellIn\\":-1,\\"quality\\":0}",
+}
+`;
