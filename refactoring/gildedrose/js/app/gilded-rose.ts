@@ -4,6 +4,14 @@ import {AgedBrieQualityUpdater} from "@/aged-brie-quality-updater";
 import {SulfurasQualityUpdater} from "@/sulfuras-quality-updater";
 import {DefaultItemQualityUpdater} from "@/default-item-quality-updater";
 
+export class NonNegativeWithCeilingQuality {
+    quality: number;
+    constructor(quality) {
+        this.quality = quality;
+    }
+
+}
+
 export class Item {
     name: string;
     sellIn: number;
