@@ -5,8 +5,7 @@ describe('Gilded Rose', () => {
   function updateGildedRoseQuality(name: string) {
     const gildedRose = new GildedRose([new Item(name, 0, 0)]);
     const items = gildedRose.updateQuality();
-    let result = JSON.stringify(items[0]);
-    return result;
+    return JSON.stringify(items[0]);
   }
 
   it('should foo', () => {
