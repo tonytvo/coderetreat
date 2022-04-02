@@ -10,22 +10,8 @@ export class Item {
     }
 }
 
-export class GildedRose {
-    items: Array<Item>;
-
-    constructor(items = [] as Array<Item>) {
-        this.items = items;
-    }
-
-    updateQuality() {
-        for (let i = 0; i < this.items.length; i++) {
-            this.updateSingleItem(this.items[i]);
-        }
-
-        return this.items;
-    }
-
-    private updateSingleItem(item: Item) {
+export class QualityUpdater {
+    public updateSingleItem(item: Item) {
         if (item.name == 'Aged Brie') {
             this.updateQualityForAgeBrie(item);
             return;
@@ -87,5 +73,21 @@ export class GildedRose {
         if (item.quality < 50) {
             item.quality = item.quality + 1
         }
+    }
+}
+
+export class GildedRose {
+    items: Array<Item>;
+
+    constructor(items = [] as Array<Item>) {
+        this.items = items;
+    }
+
+    updateQuality() {
+        for (let i = 0; i < this.items.length; i++) {
+            new QualityUpdater().updateSingleItem(this.items[i]);
+        }
+
+        return this.items;
     }
 }
