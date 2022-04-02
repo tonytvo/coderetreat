@@ -34,6 +34,11 @@ export class GildedRose {
     }
 
     private updateQualityForEveryThingElse(item: Item) {
+      if (item.name != 'Backstage passes to a TAFKAL80ETC concert') {
+
+      } else {
+
+      }
       this.doStuff1(item);
     }
 
