@@ -26,6 +26,10 @@ export class GildedRose {
   }
 
   private updateSingleItem(item: Item) {
+    this.doStuff(item);
+  }
+
+  private doStuff(item: Item) {
     if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert') {
       if (item.quality > 0) {
         if (item.name != 'Sulfuras, Hand of Ragnaros') {
