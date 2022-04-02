@@ -1,9 +1,10 @@
 import {GildedRose, Item} from '@/gilded-rose';
 import 'jest-extended-snapshot';
+import * as R from 'ramda';
 
 describe('Gilded Rose', () => {
-  function updateGildedRoseQuality(name: string, quality: number) {
-    const gildedRose = new GildedRose([new Item(name, 0, quality)]);
+  function updateGildedRoseQuality(name: string, quality: number, sellIn: number) {
+    const gildedRose = new GildedRose([new Item(name, sellIn, quality)]);
     const items = gildedRose.updateQuality();
     return JSON.stringify(items[0]);
   }
@@ -16,6 +17,7 @@ describe('Gilded Rose', () => {
       ,"Sulfuras, Hand of Ragnaros"
       ,"Backstage passes to a TAFKAL80ETC concert"];
     let qualities = [-1, 0, 1, 49, 50, 51];
-    expect(updateGildedRoseQuality).toVerifyAllCombinations(names, qualities);
+    let sellIns = R.range(-1, 15);
+    expect(updateGildedRoseQuality).toVerifyAllCombinations(names, qualities, sellIns);
   });
 });
