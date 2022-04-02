@@ -71,7 +71,7 @@ export class SulfurasQualityUpdater implements QualityUpdater {
     }
 }
 
-export class EveryThingQualityUpdater implements QualityUpdater {
+export class DefaultItemQualityUpdater implements QualityUpdater {
     update(item: Item) {
         this.updateQualityForDefaultItem(item);
     }
@@ -120,6 +120,6 @@ export class GildedRose {
             return new SulfurasQualityUpdater();
         }
 
-        return new EveryThingQualityUpdater();
+        return new DefaultItemQualityUpdater();
     }
 }
