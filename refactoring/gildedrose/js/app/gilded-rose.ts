@@ -10,6 +10,11 @@ export class NonNegativeWithCeilingQuality {
         this.quality = quality;
     }
 
+    public increaseQuality() {
+        if (this.quality < 50) {
+            this.quality = this.quality + 1
+        }
+    }
 }
 
 export class Item {
@@ -23,6 +28,12 @@ export class Item {
         this.sellIn = sellIn;
         this.quality = quality;
         this.qualityTemp = new NonNegativeWithCeilingQuality(quality);
+    }
+
+    public increaseQuality() {
+        if (this.quality < 50) {
+            this.quality = this.quality + 1
+        }
     }
 
     public toString() {

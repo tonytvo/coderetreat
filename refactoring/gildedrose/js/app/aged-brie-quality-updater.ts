@@ -7,16 +7,10 @@ export class AgedBrieQualityUpdater implements QualityUpdater {
     }
 
     private updateQualityForAgeBrie(item: Item) {
-        this.increaseQualityIfLessThan50(item);
+        item.increaseQuality();
         item.sellIn = item.sellIn - 1;
         if (item.sellIn < 0) {
-            this.increaseQualityIfLessThan50(item);
-        }
-    }
-
-    private increaseQualityIfLessThan50(item: Item) {
-        if (item.quality < 50) {
-            item.quality = item.quality + 1
+            item.increaseQuality();
         }
     }
 }
