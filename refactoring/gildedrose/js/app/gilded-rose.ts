@@ -109,9 +109,13 @@ export class GildedRose {
 
     updateQuality() {
         for (let i = 0; i < this.items.length; i++) {
-            new EveryThingQualityUpdater().update(this.items[i]);
+            this.createQualityUpdater().update(this.items[i]);
         }
 
         return this.items;
+    }
+
+    private createQualityUpdater() {
+        return new EveryThingQualityUpdater();
     }
 }
