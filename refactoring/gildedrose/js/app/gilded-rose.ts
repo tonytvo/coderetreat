@@ -26,11 +26,11 @@ export class GildedRose {
     }
 
     private updateSingleItem(item: Item) {
-        if (item.name == 'Aged Brie') {
-            this.updateQualityForAgeBrie(item);
-        } else {
-            this.updateQualityForEveryThingElse(item);
-        }
+      if (item.name == 'Aged Brie') {
+        this.updateQualityForAgeBrie(item);
+        return;
+      }
+      this.updateQualityForEveryThingElse(item);
     }
 
     private updateQualityForEveryThingElse(item: Item) {
