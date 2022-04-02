@@ -1,4 +1,4 @@
-import { Item, GildedRose } from '@/gilded-rose';
+import {GildedRose, Item} from '@/gilded-rose';
 
 describe('Gilded Rose', () => {
   function updateGildedRoseQuality() {
@@ -9,7 +9,6 @@ describe('Gilded Rose', () => {
   }
 
   it('should foo', () => {
-    let result = updateGildedRoseQuality();
-    expect(result).toMatchSnapshot('foo');
+    expect(updateGildedRoseQuality()).toMatchSnapshot('foo');
   });
 });
