@@ -26,6 +26,11 @@ export class GildedRose {
   }
 
   private updateSingleItem(item: Item) {
+    if (true) {
+
+    } else {
+
+    }
     this.doStuff(item);
   }
 
