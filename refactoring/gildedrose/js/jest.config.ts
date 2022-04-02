@@ -9,5 +9,6 @@ export default {
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
+  setupFilesAfterEnv: ["jest-extended-snapshot"],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' } ),
 };
