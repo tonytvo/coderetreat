@@ -66,16 +66,13 @@ export class AgedBrieQualityUpdater implements QualityUpdater {
     }
 }
 
+export class SulfurasQualityUpdater implements QualityUpdater {
+    update(item: Item): void {
+    }
+}
+
 export class EveryThingQualityUpdater implements QualityUpdater {
     update(item: Item) {
-        if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
-            this.updateQualityBackstagePasses(item);
-            return;
-        }
-        if (item.name == 'Sulfuras, Hand of Ragnaros') {
-            return;
-        }
-
         this.updateQualityForDefaultItem(item);
     }
 
@@ -143,6 +140,10 @@ export class GildedRose {
 
         if (name == 'Backstage passes to a TAFKAL80ETC concert') {
             return new BackstagePassQualityUpdater();
+        }
+
+        if (name == 'Sulfuras, Hand of Ragnaros') {
+            return new SulfurasQualityUpdater();
         }
 
         return new EveryThingQualityUpdater();
