@@ -14,6 +14,26 @@ export interface QualityUpdater {
     update(item: Item): void;
 }
 
+export class AgedBrieQualityUpdater implements QualityUpdater {
+    update(item: Item): void {
+        this.updateQualityForAgeBrie(item);
+    }
+
+    private updateQualityForAgeBrie(item: Item) {
+        this.increaseQualityIfLessThan50(item);
+        item.sellIn = item.sellIn - 1;
+        if (item.sellIn < 0) {
+            this.increaseQualityIfLessThan50(item);
+        }
+    }
+
+    private increaseQualityIfLessThan50(item: Item) {
+        if (item.quality < 50) {
+            item.quality = item.quality + 1
+        }
+    }
+}
+
 export class EveryThingQualityUpdater implements QualityUpdater {
     update(item: Item) {
         if (item.name == 'Aged Brie') {
