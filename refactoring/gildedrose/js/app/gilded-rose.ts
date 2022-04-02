@@ -36,10 +36,6 @@ export class AgedBrieQualityUpdater implements QualityUpdater {
 
 export class EveryThingQualityUpdater implements QualityUpdater {
     update(item: Item) {
-        if (item.name == 'Aged Brie') {
-            this.updateQualityForAgeBrie(item);
-            return;
-        }
         if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
             this.updateQualityBackstagePasses(item);
             return;
@@ -109,13 +105,18 @@ export class GildedRose {
 
     updateQuality() {
         for (let i = 0; i < this.items.length; i++) {
-            this.createQualityUpdater().update(this.items[i]);
+            let item = this.items[i];
+            this.createQualityUpdater(item.name).update(item);
         }
 
         return this.items;
     }
 
-    private createQualityUpdater() {
+    private createQualityUpdater(name: string) : QualityUpdater{
+        if (name == 'Aged Brie') {
+            return new AgedBrieQualityUpdater();
+        }
+
         return new EveryThingQualityUpdater();
     }
 }
