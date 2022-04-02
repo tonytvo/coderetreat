@@ -30,17 +30,12 @@ export class GildedRose {
         this.updateQualityForAgeBrie(item);
         return;
       }
-      this.updateQualityForEveryThingElse(item);
-    }
-
-    private updateQualityForEveryThingElse(item: Item) {
       if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
         this.updateQualityBackstagePasses(item);
-      } else {
-        this.updateQualityForEverythingElse(item);
+        return;
       }
+      this.updateQualityForEverythingElse(item);
     }
-
   private updateQualityForEverythingElse(item: Item) {
     if (item.quality > 0) {
       if (item.name != 'Sulfuras, Hand of Ragnaros') {
