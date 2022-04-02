@@ -22,6 +22,10 @@ export class Item {
         this.sellIn = sellIn;
         this.quality = quality;
     }
+
+    public toString() {
+        return `{"name":"${this.name}","sellIn":${this.sellIn},"quality":${this.quality}}`;
+    }
 }
 
 export class GildedRose {
