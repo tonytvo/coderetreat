@@ -10,8 +10,12 @@ export class Item {
     }
 }
 
-export class EveryThingQualityUpdater {
-    public updateSingleItem(item: Item) {
+export interface QualityUpdater {
+    update(item: Item): void;
+}
+
+export class EveryThingQualityUpdater implements QualityUpdater {
+    update(item: Item) {
         if (item.name == 'Aged Brie') {
             this.updateQualityForAgeBrie(item);
             return;
@@ -85,7 +89,7 @@ export class GildedRose {
 
     updateQuality() {
         for (let i = 0; i < this.items.length; i++) {
-            new EveryThingQualityUpdater().updateSingleItem(this.items[i]);
+            new EveryThingQualityUpdater().update(this.items[i]);
         }
 
         return this.items;
