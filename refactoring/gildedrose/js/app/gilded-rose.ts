@@ -61,9 +61,7 @@ export class GildedRose {
         if (item.quality < 50) {
             item.quality = item.quality + 1
             if (item.sellIn < 11) {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1
-                }
+                this.increaseQualityIfLessThan50(item);
             }
             if (item.sellIn < 6) {
                 this.increaseQualityIfLessThan50(item);
@@ -76,9 +74,7 @@ export class GildedRose {
     }
 
     private updateQualityForAgeBrie(item: Item) {
-        if (item.quality < 50) {
-            item.quality = item.quality + 1
-        }
+        this.increaseQualityIfLessThan50(item);
         item.sellIn = item.sellIn - 1;
         if (item.sellIn < 0) {
             this.increaseQualityIfLessThan50(item);
