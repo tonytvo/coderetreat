@@ -17,8 +17,15 @@ public class RpgCombatAcceptanceTest {
     }
 
     private static class Player {
+
+        private final int _health;
+
+        public Player() {
+            _health = INITIAL_HEALTH;
+        }
+
         public int health() {
-            return INITIAL_HEALTH;
+            return _health;
         }
     }
 }
