@@ -234,6 +234,15 @@ public class RPGAcceptanceTest {
         assertThat(target.health()).isEqualTo(2000);
     }
 
+//    @Test
+//    void player_can_damage_non_players_like_tree() {
+//        Thing target = new RpgTree();
+//
+//        player1.attack(target, 200);
+//
+//        assertThat(target.health()).isEqualTo(1800);
+//    }
+
     private void attack(Player ally, int inflictedDamage) {
         new PlayerBuilder().createPlayer().attack(ally, inflictedDamage);
     }
