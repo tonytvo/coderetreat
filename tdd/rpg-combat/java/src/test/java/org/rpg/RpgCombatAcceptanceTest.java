@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.rpg.Player.INITIAL_LEVEL;
 
 public class RpgCombatAcceptanceTest {
     private static final int DAMAGE_EXCEEDING_HEALTH = Player.INITIAL_HEALTH + 1;
@@ -41,5 +42,10 @@ public class RpgCombatAcceptanceTest {
         player.receiveDamage(DAMAGE_EXCEEDING_HEALTH);
 
         assertThat(player.isAlive()).isEqualTo(false);
+    }
+
+    @Test
+    public void has_level_at_1_when_created() {
+        assertThat(player.level()).isEqualTo(INITIAL_LEVEL);
     }
 }

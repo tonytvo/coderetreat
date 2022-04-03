@@ -1,6 +1,7 @@
 package org.rpg;
 
 class Player {
+    protected static final int INITIAL_LEVEL = 0;
     protected static final int INITIAL_HEALTH = 1000;
     private int _health;
 
@@ -21,5 +22,9 @@ class Player {
 
     public boolean isAlive() {
         return _health > 0;
+    }
+
+    public int level() {
+        return INITIAL_LEVEL;
     }
 }
