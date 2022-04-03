@@ -3,6 +3,6 @@ import {Item} from "@/gilded-rose";
 
 export class SulfurasQualityUpdater implements QualityUpdater {
     update(item: Item): Item {
-        return new Item(item.name, item.sellIn, item.quality);
+        return new Item(item.name, item.sellIn, item.qualityTemp.quality);
     }
 }
