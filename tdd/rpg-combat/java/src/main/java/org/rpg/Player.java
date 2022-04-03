@@ -4,7 +4,7 @@ import com.google.common.collect.Sets;
 
 import java.util.*;
 
-public class Player {
+public class Player implements Target {
 
     public static final int MAX_HEALTH = 1000;
     public static final int INITIAL_LEVEL = 1;
@@ -24,6 +24,7 @@ public class Player {
         factionsJoined = new HashSet<>();
     }
 
+    @Override
     public int health() {
         return health;
     }
