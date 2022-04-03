@@ -39,6 +39,10 @@ export class Item {
     public toString() {
         return `{"name":"${this.name}","sellIn":${this.sellIn},"quality":${this.quality}}`;
     }
+
+    public resetQuality() {
+        this.quality = 0;
+    }
 }
 
 export class GildedRose {

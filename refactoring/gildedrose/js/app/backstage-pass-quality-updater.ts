@@ -10,25 +10,15 @@ export class BackstagePassQualityUpdater implements QualityUpdater {
         if (item.quality < 50) {
             item.quality = item.quality + 1
             if (item.sellIn < 11) {
-                this.increaseQualityIfLessThan50(item);
+                item.increaseQuality();
             }
             if (item.sellIn < 6) {
-                this.increaseQualityIfLessThan50(item);
+                item.increaseQuality();
             }
         }
         item.sellIn = item.sellIn - 1;
         if (item.sellIn < 0) {
-            this.resetQuality(item);
-        }
-    }
-
-    private resetQuality(item: Item) {
-        item.quality = item.quality - item.quality
-    }
-
-    private increaseQualityIfLessThan50(item: Item) {
-        if (item.quality < 50) {
-            item.quality = item.quality + 1
+            item.resetQuality();
         }
     }
 }
