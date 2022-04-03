@@ -12,8 +12,20 @@ export class NonNegativeWithCeilingQuality {
 
     public increaseQuality() {
         if (this.quality < 50) {
-            this.quality = this.quality + 1
+            return new NonNegativeWithCeilingQuality(this.quality + 1);
         }
+        return new NonNegativeWithCeilingQuality(this.quality);
+    }
+
+    static zero() {
+        return new NonNegativeWithCeilingQuality(0);
+    }
+
+    public decreaseQuality() {
+        if (this.quality > 0) {
+            return new NonNegativeWithCeilingQuality(this.quality - 1);
+        }
+        return new NonNegativeWithCeilingQuality(this.quality);
     }
 }
 
@@ -34,6 +46,8 @@ export class Item {
         if (this.quality < 50) {
             this.quality = this.quality + 1
         }
+        this.qualityTemp = this.qualityTemp.increaseQuality();
+        return this.qualityTemp;
     }
 
     public toString() {
@@ -42,12 +56,16 @@ export class Item {
 
     public resetQuality() {
         this.quality = 0;
+        this.qualityTemp = NonNegativeWithCeilingQuality.zero();
+        return this.qualityTemp;
     }
 
     public decreaseQuality() {
         if (this.quality > 0) {
             this.quality = this.quality - 1
         }
+        this.qualityTemp = this.qualityTemp.decreaseQuality();
+        return this.qualityTemp;
     }
 }
 
