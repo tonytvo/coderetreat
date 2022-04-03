@@ -227,7 +227,28 @@ public class RPGAcceptanceTest {
         assertThat(ally.health()).isEqualTo(Player.MAX_HEALTH);
     }
 
+    @Test
+    void when_tree_created_it_has_2000_health() {
+        Thing target = new RpgTree();
+
+        assertThat(target.health()).isEqualTo(2000);
+    }
+
     private void attack(Player ally, int inflictedDamage) {
         new PlayerBuilder().createPlayer().attack(ally, inflictedDamage);
+    }
+
+    private static class RpgTree implements Thing {
+
+        private final int health;
+
+        public RpgTree() {
+            health = 2000;
+        }
+
+        @Override
+        public int health() {
+            return health;
+        }
     }
 }
