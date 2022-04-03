@@ -51,7 +51,7 @@ export class Item {
     }
 
     public toString() {
-        return `{"name":"${this.name}","sellIn":${this.sellIn},"quality":${this.quality}}`;
+        return `{"name":"${this.name}","sellIn":${this.sellIn},"quality":${this.qualityTemp.quality}}`;
     }
 
     public resetQuality() {
@@ -77,10 +77,9 @@ export class GildedRose {
     }
 
     updateQuality() {
-        for (let i = 0; i < this.items.length; i++) {
-            let item = this.items[i];
+        this.items.forEach(item => {
             this.createQualityUpdater(item.name).update(item);
-        }
+        });
 
         return this.items;
     }
