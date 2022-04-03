@@ -50,6 +50,10 @@ export class Item {
     public decreaseQuality() {
         return this.quality.decreaseQuality();
     }
+
+    public qualityAmount() {
+        return this.quality.quality;
+    }
 }
 
 export class GildedRose {
