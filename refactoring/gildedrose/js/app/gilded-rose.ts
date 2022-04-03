@@ -43,6 +43,12 @@ export class Item {
     public resetQuality() {
         this.quality = 0;
     }
+
+    public decreaseQuality() {
+        if (this.quality > 0) {
+            this.quality = this.quality - 1
+        }
+    }
 }
 
 export class GildedRose {

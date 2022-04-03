@@ -7,16 +7,10 @@ export class DefaultItemQualityUpdater implements QualityUpdater {
     }
 
     private updateQualityForDefaultItem(item: Item) {
-        this.decreaseQualityIfGreatherThan0(item);
+        item.decreaseQuality();
         item.sellIn = item.sellIn - 1;
         if (item.sellIn < 0) {
-            this.decreaseQualityIfGreatherThan0(item);
-        }
-    }
-
-    private decreaseQualityIfGreatherThan0(item: Item) {
-        if (item.quality > 0) {
-            item.quality = item.quality - 1
+            item.decreaseQuality();
         }
     }
 }
