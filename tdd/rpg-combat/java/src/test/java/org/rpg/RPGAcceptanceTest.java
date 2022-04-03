@@ -11,7 +11,8 @@ import static org.rpg.Player.*;
 
 public class RPGAcceptanceTest {
     private static final int DAMAGE_EXCEEDING_HEALTH = Player.MAX_HEALTH + 1;
-    private final DistanceCalculator inRangeDistanceCalculator = (coord1, coord2, allowedRange) -> true;
+    private static final DistanceCalculator ALWAYS_WITHING_RANGE_CALCULATOR = (coord1, coord2, allowedRange) -> true;
+    private final DistanceCalculator inRangeDistanceCalculator = ALWAYS_WITHING_RANGE_CALCULATOR;
     private final DistanceCalculator outOfRangeDistanceCalculator = (coord1, coord2, allowedRange) -> false;
 
     private Player player1;
@@ -47,28 +48,40 @@ public class RPGAcceptanceTest {
     public void loses_health_when_receiving_damage() {
         int currentHealth = player1.health();
 
-        new AttackActionFactory().createAttackAction(player2, player1, 1).attack();
+        int damage = 1;
 
-        assertThat(player1.health()).isEqualTo(currentHealth-1);
+        createAttackAction(player2, player1, damage, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
+
+        assertThat(player1.health()).isEqualTo(currentHealth- damage);
+    }
+
+    private AttackAction createAttackAction(Player attackingPlayer,
+                                            Player target,
+                                            int damage,
+                                            DistanceCalculator distanceCalculator) {
+        return new AttackActionFactory().createAttackAction(attackingPlayer,
+                target,
+                distanceCalculator,
+                damage);
     }
 
     @Test
     public void when_damage_received_exceeds_current_health_health_becomes_zero() {
-        new AttackActionFactory().createAttackAction(player2, player1, DAMAGE_EXCEEDING_HEALTH).attack();
+        createAttackAction(player2, player1, DAMAGE_EXCEEDING_HEALTH, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
 
         assertThat(player1.health()).isEqualTo(0);
     }
 
     @Test
     public void when_when_health_becomes_zero_character_dies() {
-        new AttackActionFactory().createAttackAction(player2, player1, DAMAGE_EXCEEDING_HEALTH).attack();
+        createAttackAction(player2, player1, DAMAGE_EXCEEDING_HEALTH, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
 
         assertThat(player1.isAlive()).isEqualTo(false);
     }
 
     @Test
     public void character_can_be_healed() {
-        new AttackActionFactory().createAttackAction(player2, player1, 2).attack();
+        createAttackAction(player2, player1, 2, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
         int previousHealth = player1.health();
 
         player1.receiveHealing(1);
@@ -78,7 +91,7 @@ public class RPGAcceptanceTest {
 
     @Test
     public void healing_cannot_raise_health_above_max_health() {
-        new AttackActionFactory().createAttackAction(player2, player1, 1).attack();
+        createAttackAction(player2, player1, 1, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
 
         player1.receiveHealing(2);
 
@@ -87,7 +100,7 @@ public class RPGAcceptanceTest {
 
     @Test
     public void dead_character_can_not_be_healed() {
-        new AttackActionFactory().createAttackAction(player2, player1, DAMAGE_EXCEEDING_HEALTH).attack();
+        createAttackAction(player2, player1, DAMAGE_EXCEEDING_HEALTH, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
 
         player1.receiveHealing(2);
 
@@ -100,7 +113,7 @@ public class RPGAcceptanceTest {
         new PlayerBuilder();
         player1 = new org.rpg.PlayerBuilder().setInitialLevel(6).setDistanceCalculator(inRangeDistanceCalculator).createPlayer();
 
-        new AttackActionFactory().createAttackAction(player2, player1, 2).attack();
+        createAttackAction(player2, player1, 2, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
 
         assertThat(player1.health()).isEqualTo(Player.MAX_HEALTH - 1);
     }
@@ -113,7 +126,7 @@ public class RPGAcceptanceTest {
         player2 = new org.rpg.PlayerBuilder()
                 .setInitialLevel(1 + 5)
                 .createPlayer();
-        new AttackActionFactory().createAttackAction(player2, player1, 2).attack();
+        createAttackAction(player2, player1, 2, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
 
         assertThat(player1.health()).isEqualTo(Player.MAX_HEALTH - 3);
     }
@@ -152,7 +165,7 @@ public class RPGAcceptanceTest {
                 .forRangedFighter()
                 .createPlayer();
 
-        new AttackActionFactory().createAttackAction(john, louis, 2).attack();
+        createAttackAction(john, louis, 2, outOfRangeDistanceCalculator).attack();
 
         assertThat(louis.health()).isEqualTo(MAX_HEALTH);
     }
@@ -223,7 +236,7 @@ public class RPGAcceptanceTest {
         player1.join(Faction.DEVELOPERS);
         Player ally = new PlayerBuilder().createPlayer();
         ally.join(Faction.DEVELOPERS);
-        new AttackActionFactory().createAttackAction(player1, ally, 10).attack();
+        createAttackAction(player1, ally, 10, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
         assertThat(ally.health()).isEqualTo(Player.MAX_HEALTH);
     }
 
@@ -244,7 +257,7 @@ public class RPGAcceptanceTest {
 //    }
 
     private void attack(Player ally, int inflictedDamage) {
-        new AttackActionFactory().createAttackAction(new PlayerBuilder().createPlayer(), ally, inflictedDamage).attack();
+        createAttackAction(new PlayerBuilder().createPlayer(), ally, inflictedDamage, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
     }
 
     private static class RpgTree implements Thing {

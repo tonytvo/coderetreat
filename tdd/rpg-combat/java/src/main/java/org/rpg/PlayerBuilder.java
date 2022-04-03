@@ -2,7 +2,7 @@ package org.rpg;
 
 public class PlayerBuilder {
     private int initialLevel;
-    private DistanceCalculator distanceCalculator = (coord1, coord2, allowedRange) -> true;;
+    private DistanceCalculator distanceCalculator = (coord1, coord2, allowedRange) -> true;
     private boolean isMeleeFighter = false;
     private boolean isRangedFighter = false;
 

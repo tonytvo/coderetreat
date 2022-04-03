@@ -53,9 +53,6 @@ public class Player implements Target {
             target.receiveHealing(healing);
         }
     }
-    public interface AttackAction {
-        void attack();
-    }
 
     public int maxRange() {
         return MAX_RANGE;
@@ -78,19 +75,15 @@ public class Player implements Target {
         return !intersection.isEmpty();
     }
 
-    private int halfOf(int damage) {
-        return damage / 2;
-    }
-
-    private boolean shouldReduceDamangeForCharacter(Player attackedCharacter) {
+    protected boolean shouldReduceDamangeForCharacter(Player attackedCharacter) {
         return this.level <= attackedCharacter.level() - 5;
     }
 
-    private boolean shouldIncreaseDamageForCharacter(Player attackedCharacter) {
+    protected boolean shouldIncreaseDamageForCharacter(Player attackedCharacter) {
         return this.level >= attackedCharacter.level() + 5;
     }
 
-    private void receiveDamage(int damage) {
+    protected void receiveDamage(int damage) {
         health -= damage;
         if (health < 0) {
             health = 0;
@@ -148,9 +141,12 @@ public class Player implements Target {
     }
 
     public static class AttackActionFactory {
-        public AttackAction createAttackAction(Player attackingPlayer, Player target, int damage) {
+        public AttackAction createAttackAction(Player attackingPlayer,
+                                               Player target,
+                                               DistanceCalculator distanceCalculator,
+                                               int damage) {
             if (target instanceof Player) {
-                return new PlayerAttackAction(attackingPlayer, target, attackingPlayer.distanceCalculator, damage);
+                return new PlayerAttackAction(attackingPlayer, target, distanceCalculator, damage);
             }
             throw new UnsupportedOperationException("not implemented yet");
         }
