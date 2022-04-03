@@ -54,6 +54,10 @@ public class Player {
     }
 
     public void attack(int damage, Player attackedCharacter) {
+        if (isAlliedWith(attackedCharacter)) {
+            return;
+        }
+
         if (!distanceCalculator.isWithinRange(this.position, attackedCharacter.position, maxRange())) {
             return;
         }

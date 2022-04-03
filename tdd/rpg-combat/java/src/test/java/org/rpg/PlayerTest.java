@@ -218,6 +218,15 @@ public class PlayerTest {
         assertThat(ally.health()).isEqualTo(Player.MAX_HEALTH - inflictedDamage + healing);
     }
 
+    @Test
+    public void character_cannot_deal_damage_to_an_ally() {
+        player1.join(Faction.DEVELOPERS);
+        Player ally = new PlayerBuilder().createPlayer();
+        ally.join(Faction.DEVELOPERS);
+        player1.attack(10, ally);
+        assertThat(ally.health()).isEqualTo(Player.MAX_HEALTH);
+    }
+
     private void attack(Player ally, int inflictedDamage) {
         new PlayerBuilder().createPlayer().attack(inflictedDamage, ally);
     }
