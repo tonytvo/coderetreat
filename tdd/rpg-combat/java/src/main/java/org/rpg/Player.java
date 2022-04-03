@@ -36,7 +36,7 @@ public class Player {
         return level;
     }
 
-    public void heal(int healing) {
+    public void receiveHealing(int healing) {
         if (!isAlive()) {
             return;
         }
@@ -49,7 +49,7 @@ public class Player {
 
     public void heal(Player target, int healing) {
         if (isAlliedWith(target)) {
-            target.heal(healing);
+            target.receiveHealing(healing);
         }
     }
 

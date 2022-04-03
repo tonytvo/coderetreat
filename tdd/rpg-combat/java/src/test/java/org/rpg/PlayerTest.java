@@ -71,7 +71,7 @@ public class PlayerTest {
         player2.attack(2, player1);
         int previousHealth = player1.health();
 
-        player1.heal(1);
+        player1.receiveHealing(1);
 
         assertThat(player1.health()).isEqualTo(previousHealth+1);
     }
@@ -80,7 +80,7 @@ public class PlayerTest {
     public void healing_cannot_raise_health_above_max_health() {
         player2.attack(1, player1);
 
-        player1.heal(2);
+        player1.receiveHealing(2);
 
         assertThat(player1.health()).isEqualTo(Player.MAX_HEALTH);
     }
@@ -89,7 +89,7 @@ public class PlayerTest {
     public void dead_character_can_not_be_healed() {
         player2.attack(DAMAGE_EXCEEDING_HEALTH, player1);
 
-        player1.heal(2);
+        player1.receiveHealing(2);
 
         assertThat(player1.isAlive()).isEqualTo(false);
     }
