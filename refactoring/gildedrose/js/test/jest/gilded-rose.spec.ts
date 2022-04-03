@@ -1,6 +1,7 @@
-import {GildedRose, Item} from '@/gilded-rose';
+import {GildedRose} from '@/gilded-rose';
 import 'jest-extended-snapshot';
 import * as R from 'ramda';
+import {Item} from "@/item";
 
 describe('Gilded Rose', () => {
   function updateGildedRoseQuality(name: string, quality: number, sellIn: number) {

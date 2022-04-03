@@ -1,4 +1,4 @@
-import {Item} from "@/gilded-rose";
+import {Item} from "@/item";
 
 export interface QualityUpdater {
     update(item: Item): Item;

@@ -1,5 +1,5 @@
 import {QualityUpdater} from "@/quality-updater";
-import {Item} from "@/gilded-rose";
+import {Item} from "@/item";
 
 export class DefaultItemQualityUpdater implements QualityUpdater {
     update(item: Item): Item {

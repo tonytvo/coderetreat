@@ -1,5 +1,6 @@
 import {QualityUpdater} from "@/quality-updater";
-import {Item, NonNegativeWithCeilingQuality} from "@/gilded-rose";
+import {Item} from "@/item";
+import {NonNegativeWithCeilingQuality} from "@/non-negative-with-ceiling-quality";
 
 export class BackstagePassQualityUpdater implements QualityUpdater {
     update(item: Item): Item {
