@@ -18,4 +18,8 @@ class Player {
             _health = 0;
         }
     }
+
+    public boolean isAlive() {
+        return _health > 0;
+    }
 }

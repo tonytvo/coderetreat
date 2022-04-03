@@ -35,4 +35,11 @@ public class RpgCombatAcceptanceTest {
 
         assertThat(player.health()).isEqualTo(0);
     }
+
+    @Test
+    public void when_when_health_becomes_zero_character_dies() {
+        player.receiveDamage(DAMAGE_EXCEEDING_HEALTH);
+
+        assertThat(player.isAlive()).isEqualTo(false);
+    }
 }
