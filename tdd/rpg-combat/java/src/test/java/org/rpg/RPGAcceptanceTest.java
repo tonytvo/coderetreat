@@ -47,28 +47,28 @@ public class RPGAcceptanceTest {
     public void loses_health_when_receiving_damage() {
         int currentHealth = player1.health();
 
-        player2.attack(player1, 1);
+        new AttackActionFactory().createAttackAction(player2, player1, 1).attack();
 
         assertThat(player1.health()).isEqualTo(currentHealth-1);
     }
 
     @Test
     public void when_damage_received_exceeds_current_health_health_becomes_zero() {
-        player2.attack(player1, DAMAGE_EXCEEDING_HEALTH);
+        new AttackActionFactory().createAttackAction(player2, player1, DAMAGE_EXCEEDING_HEALTH).attack();
 
         assertThat(player1.health()).isEqualTo(0);
     }
 
     @Test
     public void when_when_health_becomes_zero_character_dies() {
-        player2.attack(player1, DAMAGE_EXCEEDING_HEALTH);
+        new AttackActionFactory().createAttackAction(player2, player1, DAMAGE_EXCEEDING_HEALTH).attack();
 
         assertThat(player1.isAlive()).isEqualTo(false);
     }
 
     @Test
     public void character_can_be_healed() {
-        player2.attack(player1, 2);
+        new AttackActionFactory().createAttackAction(player2, player1, 2).attack();
         int previousHealth = player1.health();
 
         player1.receiveHealing(1);
@@ -78,7 +78,7 @@ public class RPGAcceptanceTest {
 
     @Test
     public void healing_cannot_raise_health_above_max_health() {
-        player2.attack(player1, 1);
+        new AttackActionFactory().createAttackAction(player2, player1, 1).attack();
 
         player1.receiveHealing(2);
 
@@ -87,7 +87,7 @@ public class RPGAcceptanceTest {
 
     @Test
     public void dead_character_can_not_be_healed() {
-        player2.attack(player1, DAMAGE_EXCEEDING_HEALTH);
+        new AttackActionFactory().createAttackAction(player2, player1, DAMAGE_EXCEEDING_HEALTH).attack();
 
         player1.receiveHealing(2);
 
@@ -100,7 +100,7 @@ public class RPGAcceptanceTest {
         new PlayerBuilder();
         player1 = new org.rpg.PlayerBuilder().setInitialLevel(6).setDistanceCalculator(inRangeDistanceCalculator).createPlayer();
 
-        player2.attack(player1, 2);
+        new AttackActionFactory().createAttackAction(player2, player1, 2).attack();
 
         assertThat(player1.health()).isEqualTo(Player.MAX_HEALTH - 1);
     }
@@ -113,7 +113,7 @@ public class RPGAcceptanceTest {
         player2 = new org.rpg.PlayerBuilder()
                 .setInitialLevel(1 + 5)
                 .createPlayer();
-        player2.attack(player1, 2);
+        new AttackActionFactory().createAttackAction(player2, player1, 2).attack();
 
         assertThat(player1.health()).isEqualTo(Player.MAX_HEALTH - 3);
     }
@@ -152,7 +152,7 @@ public class RPGAcceptanceTest {
                 .forRangedFighter()
                 .createPlayer();
 
-        john.attack(louis, 2);
+        new AttackActionFactory().createAttackAction(john, louis, 2).attack();
 
         assertThat(louis.health()).isEqualTo(MAX_HEALTH);
     }
@@ -223,7 +223,7 @@ public class RPGAcceptanceTest {
         player1.join(Faction.DEVELOPERS);
         Player ally = new PlayerBuilder().createPlayer();
         ally.join(Faction.DEVELOPERS);
-        player1.attack(ally, 10);
+        new AttackActionFactory().createAttackAction(player1, ally, 10).attack();
         assertThat(ally.health()).isEqualTo(Player.MAX_HEALTH);
     }
 
@@ -244,7 +244,7 @@ public class RPGAcceptanceTest {
 //    }
 
     private void attack(Player ally, int inflictedDamage) {
-        new PlayerBuilder().createPlayer().attack(ally, inflictedDamage);
+        new AttackActionFactory().createAttackAction(new PlayerBuilder().createPlayer(), ally, inflictedDamage).attack();
     }
 
     private static class RpgTree implements Thing {
