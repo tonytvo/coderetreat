@@ -7,17 +7,17 @@ export class BackstagePassQualityUpdater implements QualityUpdater {
     }
 
     private updateQualityBackstagePasses(item: Item) {
-        item.increaseQuality();
+        let updateQuality = item.increaseQuality();
         if (item.sellIn < 11) {
-            item.increaseQuality();
+            updateQuality = item.increaseQuality();
         }
         if (item.sellIn < 6) {
-            item.increaseQuality();
+            updateQuality = item.increaseQuality();
         }
-        item.sellIn = item.sellIn - 1;
-        if (item.sellIn < 0) {
-            item.resetQuality();
+        let updatedSellIn = item.sellIn - 1;
+        if (updatedSellIn < 0) {
+            updateQuality = item.resetQuality();
         }
-        return new Item(item.name, item.sellIn, item.quality);
+        return new Item(item.name, updatedSellIn, updateQuality.quality);
     }
 }
