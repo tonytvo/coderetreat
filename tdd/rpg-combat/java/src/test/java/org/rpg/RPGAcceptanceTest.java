@@ -259,23 +259,4 @@ public class RPGAcceptanceTest {
     private void attack(Player target, int inflictedDamage) {
         createAttackAction(new PlayerBuilder().createPlayer(), target, inflictedDamage, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
     }
-
-    public static class RpgTree implements Thing {
-
-        private int health;
-
-        public RpgTree() {
-            health = 2000;
-        }
-
-        @Override
-        public int health() {
-            return health;
-        }
-
-        @Override
-        public void receiveDamage(int damage) {
-            health -= damage;
-        }
-    }
 }
