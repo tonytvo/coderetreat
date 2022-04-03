@@ -2,8 +2,8 @@ import {QualityUpdater} from "@/quality-updater";
 import {Item} from "@/gilded-rose";
 
 export class DefaultItemQualityUpdater implements QualityUpdater {
-    update(item: Item) {
-        this.updateQualityForDefaultItem(item);
+    update(item: Item): Item {
+        return this.updateQualityForDefaultItem(item);
     }
 
     private updateQualityForDefaultItem(item: Item) {
@@ -12,5 +12,6 @@ export class DefaultItemQualityUpdater implements QualityUpdater {
         if (item.sellIn < 0) {
             item.decreaseQuality();
         }
+        return new Item(item.name, item.sellIn, item.quality);
     }
 }

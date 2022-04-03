@@ -2,8 +2,8 @@ import {QualityUpdater} from "@/quality-updater";
 import {Item} from "@/gilded-rose";
 
 export class BackstagePassQualityUpdater implements QualityUpdater {
-    update(item: Item): void {
-        this.updateQualityBackstagePasses(item);
+    update(item: Item): Item {
+        return this.updateQualityBackstagePasses(item);
     }
 
     private updateQualityBackstagePasses(item: Item) {
@@ -18,5 +18,6 @@ export class BackstagePassQualityUpdater implements QualityUpdater {
         if (item.sellIn < 0) {
             item.resetQuality();
         }
+        return new Item(item.name, item.sellIn, item.quality);
     }
 }

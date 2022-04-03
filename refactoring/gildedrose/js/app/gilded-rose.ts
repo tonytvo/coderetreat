@@ -77,6 +77,7 @@ export class GildedRose {
     }
 
     updateQuality() {
+        //this.items = this.items.map(item -> this.createQualityUpdater(item.name).update(item));
         this.items.forEach(item => {
             this.createQualityUpdater(item.name).update(item);
         });
