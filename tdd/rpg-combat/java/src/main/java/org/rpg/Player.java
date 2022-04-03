@@ -11,17 +11,20 @@ public class Player implements Target {
     public static final int MAX_RANGE = 1;
 
     private final int level;
-    private final DistanceCalculator distanceCalculator;
+
     private final Coord position;
     private int health;
     private Set<Faction> factionsJoined;
 
-    public Player(int initialLevel, DistanceCalculator distanceCalculator) {
+    public Player(int initialLevel) {
         health = MAX_HEALTH;
         level = initialLevel;
-        this.distanceCalculator = distanceCalculator;
         position = new Coord();
         factionsJoined = new HashSet<>();
+    }
+
+    public Coord getPosition() {
+        return position;
     }
 
     @Override
@@ -140,15 +143,4 @@ public class Player implements Target {
         }
     }
 
-    public static class AttackActionFactory {
-        public AttackAction createAttackAction(Player attackingPlayer,
-                                               Player target,
-                                               DistanceCalculator distanceCalculator,
-                                               int damage) {
-            if (target instanceof Player) {
-                return new PlayerAttackAction(attackingPlayer, target, distanceCalculator, damage);
-            }
-            throw new UnsupportedOperationException("not implemented yet");
-        }
-    }
 }

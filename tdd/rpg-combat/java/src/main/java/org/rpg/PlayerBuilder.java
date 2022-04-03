@@ -23,7 +23,7 @@ public class PlayerBuilder {
         if (isRangedFighter) {
             return new RangedFighter(initialLevel, distanceCalculator);
         }
-        return new Player(initialLevel, distanceCalculator);
+        return new Player(initialLevel);
     }
 
     public PlayerBuilder forMeleeFighter() {
