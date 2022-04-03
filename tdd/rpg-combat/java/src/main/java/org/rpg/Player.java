@@ -86,7 +86,8 @@ public class Player implements Target {
         return this.level >= attackedCharacter.level() + 5;
     }
 
-    protected void receiveDamage(int damage) {
+    @Override
+    public void receiveDamage(int damage) {
         health -= damage;
         if (health < 0) {
             health = 0;

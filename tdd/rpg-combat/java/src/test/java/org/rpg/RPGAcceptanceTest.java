@@ -56,7 +56,7 @@ public class RPGAcceptanceTest {
     }
 
     private AttackAction createAttackAction(Player attackingPlayer,
-                                            Player target,
+                                            Target target,
                                             int damage,
                                             DistanceCalculator distanceCalculator) {
         return new AttackActionFactory().createAttackAction(attackingPlayer,
@@ -247,22 +247,22 @@ public class RPGAcceptanceTest {
         assertThat(target.health()).isEqualTo(2000);
     }
 
-//    @Test
-//    void player_can_damage_non_players_like_tree() {
-//        Thing target = new RpgTree();
-//
-//        player1.attack(target, 200);
-//
-//        assertThat(target.health()).isEqualTo(1800);
-//    }
+    @Test
+    void player_can_damage_non_players_like_tree() {
+        Thing target = new RpgTree();
 
-    private void attack(Player ally, int inflictedDamage) {
-        createAttackAction(new PlayerBuilder().createPlayer(), ally, inflictedDamage, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
+        createAttackAction(player1, target, 200, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
+
+        assertThat(target.health()).isEqualTo(1800);
     }
 
-    private static class RpgTree implements Thing {
+    private void attack(Player target, int inflictedDamage) {
+        createAttackAction(new PlayerBuilder().createPlayer(), target, inflictedDamage, ALWAYS_WITHING_RANGE_CALCULATOR).attack();
+    }
 
-        private final int health;
+    public static class RpgTree implements Thing {
+
+        private int health;
 
         public RpgTree() {
             health = 2000;
@@ -271,6 +271,11 @@ public class RPGAcceptanceTest {
         @Override
         public int health() {
             return health;
+        }
+
+        @Override
+        public void receiveDamage(int damage) {
+            health -= damage;
         }
     }
 }
