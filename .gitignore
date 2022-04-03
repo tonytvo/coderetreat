@@ -2,3 +2,5 @@ target/
 .gradle/
 .idea/
 build/
+node_modules/
+coverage/
