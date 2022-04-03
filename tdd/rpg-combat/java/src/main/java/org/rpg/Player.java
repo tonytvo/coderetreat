@@ -78,7 +78,7 @@ public class Player implements Target {
         return !intersection.isEmpty();
     }
 
-    protected boolean shouldReduceDamangeForCharacter(Player attackedCharacter) {
+    protected boolean shouldReduceDamageForCharacter(Player attackedCharacter) {
         return this.level <= attackedCharacter.level() - 5;
     }
 
@@ -90,56 +90,6 @@ public class Player implements Target {
         health -= damage;
         if (health < 0) {
             health = 0;
-        }
-    }
-
-    public static class PlayerAttackAction implements AttackAction {
-        private final Player attackingPlayer;
-        private final Player target;
-        private final DistanceCalculator distanceCalculator;
-        private final int damage;
-
-        public PlayerAttackAction(Player attackingPlayer,
-                                  Player target,
-                                  DistanceCalculator distanceCalculator,
-                                  int damage) {
-            this.attackingPlayer = attackingPlayer;
-            this.target = target;
-            this.distanceCalculator = distanceCalculator;
-            this.damage = damage;
-        }
-
-        @Override
-        public void attack() {
-            if (attackingPlayer.isAlliedWith(target)) {
-                return;
-            }
-
-            if (!distanceCalculator.isWithinRange(attackingPlayer.position, target.position, attackingPlayer.maxRange())) {
-                return;
-            }
-
-            int calculatedDamange = reduceDamageByHalfIfAttackedCharacterIs5LevelHigher(attackingPlayer, target, damage);
-            target.receiveDamage(calculatedDamange);
-
-        }
-
-        private int reduceDamageByHalfIfAttackedCharacterIs5LevelHigher(Player attackingPlayer,
-                                                                        Player target,
-                                                                        int damage) {
-            if (attackingPlayer.shouldReduceDamangeForCharacter(target)) {
-                return halfOf(damage);
-            }
-
-            if (attackingPlayer.shouldIncreaseDamageForCharacter(target)) {
-                return Math.toIntExact(Math.round(damage * 1.5));
-            }
-
-            return damage;
-        }
-
-        private int halfOf(int damage) {
-            return damage / 2;
         }
     }
 

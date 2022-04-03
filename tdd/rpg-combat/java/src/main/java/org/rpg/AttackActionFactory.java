@@ -6,7 +6,7 @@ public class AttackActionFactory {
                                            DistanceCalculator distanceCalculator,
                                            int damage) {
         if (target instanceof Player) {
-            return new Player.PlayerAttackAction(attackingPlayer, target, distanceCalculator, damage);
+            return new PlayerAttackAction(attackingPlayer, target, distanceCalculator, damage);
         }
         throw new UnsupportedOperationException("not implemented yet");
     }
