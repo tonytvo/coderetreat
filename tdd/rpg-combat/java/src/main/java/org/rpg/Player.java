@@ -53,7 +53,7 @@ public class Player {
         }
     }
 
-    public void attack(int damage, Player attackedCharacter) {
+    public void attack(Player attackedCharacter, int damage) {
         if (isAlliedWith(attackedCharacter)) {
             return;
         }

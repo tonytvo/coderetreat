@@ -47,28 +47,28 @@ public class PlayerTest {
     public void loses_health_when_receiving_damage() {
         int currentHealth = player1.health();
 
-        player2.attack(1, player1);
+        player2.attack(player1, 1);
 
         assertThat(player1.health()).isEqualTo(currentHealth-1);
     }
 
     @Test
     public void when_damage_received_exceeds_current_health_health_becomes_zero() {
-        player2.attack(DAMAGE_EXCEEDING_HEALTH, player1);
+        player2.attack(player1, DAMAGE_EXCEEDING_HEALTH);
 
         assertThat(player1.health()).isEqualTo(0);
     }
 
     @Test
     public void when_when_health_becomes_zero_character_dies() {
-        player2.attack(DAMAGE_EXCEEDING_HEALTH, player1);
+        player2.attack(player1, DAMAGE_EXCEEDING_HEALTH);
 
         assertThat(player1.isAlive()).isEqualTo(false);
     }
 
     @Test
     public void character_can_be_healed() {
-        player2.attack(2, player1);
+        player2.attack(player1, 2);
         int previousHealth = player1.health();
 
         player1.receiveHealing(1);
@@ -78,7 +78,7 @@ public class PlayerTest {
 
     @Test
     public void healing_cannot_raise_health_above_max_health() {
-        player2.attack(1, player1);
+        player2.attack(player1, 1);
 
         player1.receiveHealing(2);
 
@@ -87,7 +87,7 @@ public class PlayerTest {
 
     @Test
     public void dead_character_can_not_be_healed() {
-        player2.attack(DAMAGE_EXCEEDING_HEALTH, player1);
+        player2.attack(player1, DAMAGE_EXCEEDING_HEALTH);
 
         player1.receiveHealing(2);
 
@@ -100,7 +100,7 @@ public class PlayerTest {
         new PlayerBuilder();
         player1 = new org.rpg.PlayerBuilder().setInitialLevel(6).setDistanceCalculator(inRangeDistanceCalculator).createPlayer();
 
-        player2.attack(2, player1);
+        player2.attack(player1, 2);
 
         assertThat(player1.health()).isEqualTo(Player.MAX_HEALTH - 1);
     }
@@ -113,7 +113,7 @@ public class PlayerTest {
         player2 = new org.rpg.PlayerBuilder()
                 .setInitialLevel(1 + 5)
                 .createPlayer();
-        player2.attack(2, player1);
+        player2.attack(player1, 2);
 
         assertThat(player1.health()).isEqualTo(Player.MAX_HEALTH - 3);
     }
@@ -152,7 +152,7 @@ public class PlayerTest {
                 .forRangedFighter()
                 .createPlayer();
 
-        john.attack(2, louis);
+        john.attack(louis, 2);
 
         assertThat(louis.health()).isEqualTo(MAX_HEALTH);
     }
@@ -223,11 +223,11 @@ public class PlayerTest {
         player1.join(Faction.DEVELOPERS);
         Player ally = new PlayerBuilder().createPlayer();
         ally.join(Faction.DEVELOPERS);
-        player1.attack(10, ally);
+        player1.attack(ally, 10);
         assertThat(ally.health()).isEqualTo(Player.MAX_HEALTH);
     }
 
     private void attack(Player ally, int inflictedDamage) {
-        new PlayerBuilder().createPlayer().attack(inflictedDamage, ally);
+        new PlayerBuilder().createPlayer().attack(ally, inflictedDamage);
     }
 }
