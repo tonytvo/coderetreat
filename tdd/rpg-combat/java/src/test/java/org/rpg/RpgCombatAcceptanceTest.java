@@ -14,4 +14,14 @@ public class RpgCombatAcceptanceTest {
         assertThat(player.health()).isEqualTo(Player.INITIAL_HEALTH);
     }
 
+    @Test
+    public void loses_health_when_receiving_damage() {
+        Player character = new Player();
+
+        int currentHealth = character.health();
+
+        character.receiveDamage(1);
+
+        assertThat(character.health()).isEqualTo(currentHealth-1);
+    }
 }
