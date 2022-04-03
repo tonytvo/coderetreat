@@ -43,29 +43,14 @@ export class Item {
     }
 
     public increaseQuality() {
-        if (this.quality < 50) {
-            this.quality = this.quality + 1
-        }
-        this.qualityTemp = this.qualityTemp.increaseQuality();
-        return this.qualityTemp;
+        return this.qualityTemp.increaseQuality();
     }
 
     public toString() {
         return `{"name":"${this.name}","sellIn":${this.sellIn},"quality":${this.qualityTemp.quality}}`;
     }
-
-    public resetQuality() {
-        this.quality = 0;
-        this.qualityTemp = NonNegativeWithCeilingQuality.zero();
-        return this.qualityTemp;
-    }
-
     public decreaseQuality() {
-        if (this.quality > 0) {
-            this.quality = this.quality - 1
-        }
-        this.qualityTemp = this.qualityTemp.decreaseQuality();
-        return this.qualityTemp;
+        return this.qualityTemp.decreaseQuality();
     }
 }
 

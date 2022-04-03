@@ -10,7 +10,7 @@ export class DefaultItemQualityUpdater implements QualityUpdater {
         let updatedQuality = item.decreaseQuality();
         let updatedSellIn = item.sellIn - 1;
         if (updatedSellIn < 0) {
-            updatedQuality = item.decreaseQuality();
+            updatedQuality = updatedQuality.decreaseQuality();
         }
         return new Item(item.name, updatedSellIn, updatedQuality.quality);
     }

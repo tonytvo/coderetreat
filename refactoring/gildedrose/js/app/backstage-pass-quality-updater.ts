@@ -1,5 +1,5 @@
 import {QualityUpdater} from "@/quality-updater";
-import {Item} from "@/gilded-rose";
+import {Item, NonNegativeWithCeilingQuality} from "@/gilded-rose";
 
 export class BackstagePassQualityUpdater implements QualityUpdater {
     update(item: Item): Item {
@@ -9,14 +9,14 @@ export class BackstagePassQualityUpdater implements QualityUpdater {
     private updateQualityBackstagePasses(item: Item) {
         let updateQuality = item.increaseQuality();
         if (item.sellIn < 11) {
-            updateQuality = item.increaseQuality();
+            updateQuality = updateQuality.increaseQuality();
         }
         if (item.sellIn < 6) {
-            updateQuality = item.increaseQuality();
+            updateQuality = updateQuality.increaseQuality();
         }
         let updatedSellIn = item.sellIn - 1;
         if (updatedSellIn < 0) {
-            updateQuality = item.resetQuality();
+            updateQuality = NonNegativeWithCeilingQuality.zero();
         }
         return new Item(item.name, updatedSellIn, updateQuality.quality);
     }
