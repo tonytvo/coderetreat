@@ -7,17 +7,16 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class RpgCombatAcceptanceTest {
 
-    private static final int INITIAL_HEALTH = 1000;
-
     @Test
     public void all_players_has_health_at_1000_when_created() {
         Player player = new Player();
 
-        assertThat(player.health()).isEqualTo(INITIAL_HEALTH);
+        assertThat(player.health()).isEqualTo(Player.INITIAL_HEALTH);
     }
 
     private static class Player {
 
+        private static final int INITIAL_HEALTH = 1000;
         private final int _health;
 
         public Player() {
