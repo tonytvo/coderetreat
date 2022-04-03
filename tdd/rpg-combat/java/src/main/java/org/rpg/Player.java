@@ -47,6 +47,12 @@ public class Player {
         }
     }
 
+    public void heal(Player target, int healing) {
+        if (isAlliedWith(target)) {
+            target.heal(healing);
+        }
+    }
+
     public void attack(int damage, Player attackedCharacter) {
         if (!distanceCalculator.isWithinRange(this.position, attackedCharacter.position, maxRange())) {
             return;
