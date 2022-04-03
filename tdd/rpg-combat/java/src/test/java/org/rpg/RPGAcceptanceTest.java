@@ -9,7 +9,7 @@ import java.util.Set;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.rpg.Player.*;
 
-public class PlayerTest {
+public class RPGAcceptanceTest {
     private static final int DAMAGE_EXCEEDING_HEALTH = Player.MAX_HEALTH + 1;
     private final DistanceCalculator inRangeDistanceCalculator = (coord1, coord2, allowedRange) -> true;
     private final DistanceCalculator outOfRangeDistanceCalculator = (coord1, coord2, allowedRange) -> false;
