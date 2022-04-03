@@ -32,23 +32,23 @@ export class NonNegativeWithCeilingQuality {
 export class Item {
     name: string;
     sellIn: number;
-    qualityTemp: NonNegativeWithCeilingQuality;
+    quality: NonNegativeWithCeilingQuality;
 
     constructor(name, sellIn, quality) {
         this.name = name;
         this.sellIn = sellIn;
-        this.qualityTemp = new NonNegativeWithCeilingQuality(quality);
+        this.quality = new NonNegativeWithCeilingQuality(quality);
     }
 
     public increaseQuality() {
-        return this.qualityTemp.increaseQuality();
+        return this.quality.increaseQuality();
     }
 
     public toString() {
-        return `{"name":"${this.name}","sellIn":${this.sellIn},"quality":${this.qualityTemp.quality}}`;
+        return `{"name":"${this.name}","sellIn":${this.sellIn},"quality":${this.quality.quality}}`;
     }
     public decreaseQuality() {
-        return this.qualityTemp.decreaseQuality();
+        return this.quality.decreaseQuality();
     }
 }
 
