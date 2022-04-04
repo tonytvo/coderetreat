@@ -1,6 +1,5 @@
 package org.rpg;
 
-import io.vavr.API;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,7 @@ public class RpgCombatAcceptanceTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player();
+        player = new Player(Player.INITIAL_HEALTH);
     }
 
     @Test

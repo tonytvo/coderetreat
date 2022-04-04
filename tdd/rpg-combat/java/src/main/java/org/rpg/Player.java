@@ -5,8 +5,8 @@ class Player {
     protected static final int INITIAL_HEALTH = 1000;
     private int _health;
 
-    public Player() {
-        _health = INITIAL_HEALTH;
+    public Player(int initialHealth) {
+        _health = initialHealth;
     }
 
     public int health() {
