@@ -1,8 +1,11 @@
 package org.rpg;
 
+import io.vavr.API;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static io.vavr.API.$;
+import static io.vavr.API.Case;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.rpg.Player.INITIAL_LEVEL;
@@ -25,21 +28,25 @@ public class RpgCombatAcceptanceTest {
     public void loses_health_when_receiving_damage() {
         int currentHealth = player.health();
 
-        player.receiveDamage(1);
+        receiveDamage(player, 1);
 
         assertThat(player.health()).isEqualTo(currentHealth-1);
     }
 
+    private void receiveDamage(Player player, int damage) {
+        player.receiveDamage(damage);
+    }
+
     @Test
     public void when_damage_received_exceeds_current_health_health_becomes_zero() {
-        player.receiveDamage(DAMAGE_EXCEEDING_HEALTH);
+        receiveDamage(player, DAMAGE_EXCEEDING_HEALTH);
 
         assertThat(player.health()).isEqualTo(0);
     }
 
     @Test
     public void when_when_health_becomes_zero_character_dies() {
-        player.receiveDamage(DAMAGE_EXCEEDING_HEALTH);
+        receiveDamage(player, DAMAGE_EXCEEDING_HEALTH);
 
         assertThat(player.isAlive()).isEqualTo(false);
     }
