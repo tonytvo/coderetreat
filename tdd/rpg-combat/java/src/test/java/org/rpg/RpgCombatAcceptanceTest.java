@@ -1,6 +1,5 @@
 package org.rpg;
 
-import io.vavr.API;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,31 +27,24 @@ public class RpgCombatAcceptanceTest {
     public void loses_health_when_receiving_damage() {
         int currentHealth = player.health();
 
-        Player updatedPlayer = receiveDamage(player, 1);
+        Player updatedPlayer = new CombatRpgApi().receiveDamage(player, 1);
 
         assertThat(updatedPlayer.health()).isEqualTo(currentHealth-1);
     }
 
-    private Player receiveDamage(Player player, int damage) {
-        Player updatedPlayer = API.Match(player.health() - damage).of(
-                Case($(health -> health > 0), Player::new),
-                Case($(), health -> new Player(0))
-        );
-        return updatedPlayer;
-    }
-
     @Test
     public void when_damage_received_exceeds_current_health_health_becomes_zero() {
-        assertThat(receiveDamage(player, DAMAGE_EXCEEDING_HEALTH).health()).isEqualTo(0);
+        assertThat(new CombatRpgApi().receiveDamage(player, DAMAGE_EXCEEDING_HEALTH).health()).isEqualTo(0);
     }
 
     @Test
     public void when_when_health_becomes_zero_character_dies() {
-        assertThat(receiveDamage(player, DAMAGE_EXCEEDING_HEALTH).isAlive()).isEqualTo(false);
+        assertThat(new CombatRpgApi().receiveDamage(player, DAMAGE_EXCEEDING_HEALTH).isAlive()).isEqualTo(false);
     }
 
     @Test
     public void has_level_at_1_when_created() {
         assertThat(player.level()).isEqualTo(INITIAL_LEVEL);
     }
+
 }
