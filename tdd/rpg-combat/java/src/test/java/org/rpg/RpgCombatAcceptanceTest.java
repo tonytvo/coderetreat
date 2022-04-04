@@ -1,5 +1,6 @@
 package org.rpg;
 
+import io.vavr.API;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,13 +28,18 @@ public class RpgCombatAcceptanceTest {
     public void loses_health_when_receiving_damage() {
         int currentHealth = player.health();
 
-        receiveDamage(player, 1);
+        Player updatedPlayer = receiveDamage(player, 1);
 
-        assertThat(player.health()).isEqualTo(currentHealth-1);
+        assertThat(updatedPlayer.health()).isEqualTo(currentHealth-1);
     }
 
-    private void receiveDamage(Player player, int damage) {
+    private Player receiveDamage(Player player, int damage) {
+        Player updatedPlayer = API.Match(player.health() - damage).of(
+                Case($(health -> health > 0), Player::new),
+                Case($(), health -> new Player(0))
+        );
         player.receiveDamage(damage);
+        return updatedPlayer;
     }
 
     @Test
