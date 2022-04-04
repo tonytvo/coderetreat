@@ -38,7 +38,6 @@ public class RpgCombatAcceptanceTest {
                 Case($(health -> health > 0), Player::new),
                 Case($(), health -> new Player(0))
         );
-        player.receiveDamage(damage);
         return updatedPlayer;
     }
 

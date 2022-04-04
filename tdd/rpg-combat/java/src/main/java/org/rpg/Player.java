@@ -3,7 +3,7 @@ package org.rpg;
 class Player {
     protected static final int INITIAL_LEVEL = 0;
     protected static final int INITIAL_HEALTH = 1000;
-    private int _health;
+    private final int _health;
 
     public Player(int initialHealth) {
         _health = initialHealth;
@@ -11,13 +11,6 @@ class Player {
 
     public int health() {
         return _health;
-    }
-
-    public void receiveDamage(int damage) {
-        _health -= damage;
-        if (_health < 0) {
-            _health = 0;
-        }
     }
 
     public boolean isAlive() {
